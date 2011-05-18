@@ -1,0 +1,33 @@
+/**
+ * Conjunto de estilos que compoem o Céu na UI.
+ *
+ * @author Rafael Fernandes <rafael.porpeta@gmail.com>
+ * @version %I%, %G%
+ */
+
+/* Tamanho e especificaçoes do gradiente de efeito do Céu */
+.sky {
+    position: fixed;
+    top: 0px;    
+    bottom: 310px;    
+    width: 100%;    
+    min-width: 1250px;
+    z-index: 1;
+    /* border: dashed 2px #FF0000; */ /* <DEBUG> */
+}
+
+/* Tamanho e posicionamento do Sol */
+.sun {
+    margin: 10px;
+    height: 350px;
+    width: 350px;
+    /* border: dashed 2px #FF0000; */ /* <DEBUG> */
+}
+
+/* Posicionamento do efeito de horizonte */
+.horizon {
+    position: fixed;
+    bottom: 310px;
+    width: 100%;
+    /* border: dashed 2px #FF0000; */ /* <DEBUG> */
+}

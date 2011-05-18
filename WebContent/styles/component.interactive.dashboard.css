@@ -1,0 +1,26 @@
+/**
+ * Conjunto de estilos que compoem a Dashboard do Aplicativo.
+ *
+ * @author Rafael Fernandes <rafael.porpeta@gmail.com>
+ * @version %I%, %G%
+ */
+
+/* Tamanho e posicionamento da Dashboard */
+.menu {
+    position: fixed;
+    left: 0px;
+    bottom: 135px;
+    width: 100%;
+    min-width: 1250px;
+    margin-left: 8%;
+    margin-right: 16%;
+    z-index: 3;
+    /* border: dashed 2px #FF0000; */ /* <DEBUG> */
+}
+
+/* Tamanho do Item da Dashboard */
+.item {
+    width: 19%;
+    height: 19%;
+    /* border: dashed 2px #FF0000; */ /* <DEBUG> */
+}

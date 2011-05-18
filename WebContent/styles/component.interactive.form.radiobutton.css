@@ -1,0 +1,49 @@
+/**
+ * Conjunto de estilos que compoem um Radio Button.
+ *
+ * @author Rafael Fernandes <rafael.porpeta@gmail.com>
+ * @version %I%, %G%
+ */
+
+/* wrapper divs */
+.custom-radio { position: relative; }
+    
+/* input, label positioning */
+.custom-radio input {
+    position: absolute;
+    left: 2px;
+    top: 3px;
+    margin: 0;
+    z-index: 0;
+}
+
+.custom-radio label {
+    display: block;
+    position: relative;
+    z-index: 1;
+    font-size: 0.9em;
+    font-weight: bold;
+    padding-right: 1em;
+    line-height: 1;
+    padding: .5em 0 .5em 30px;
+    margin: 0 0 .3em;
+    cursor: pointer;
+}
+
+.custom-radio label { 
+    background: url("drawable/form/radiobutton/unchecked/normal.png") no-repeat; 
+}
+
+.custom-radio label.hover,
+.custom-radio label.focus {
+    background: url("drawable/form/radiobutton/unchecked/selected.png") no-repeat; 
+}
+
+.custom-radio label.checked {
+    background: url("drawable/form/radiobutton/checked/normal.png") no-repeat; 
+}
+
+.custom-radio label.checkedHover, 
+.custom-radio label.checkedFocus {
+    background: url("drawable/form/radiobutton/checked/selected.png") no-repeat; 
+}

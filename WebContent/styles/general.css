@@ -1,0 +1,21 @@
+/**
+ * Conjunto de estilos genéricos para a área de manutenção.
+ *
+ * @author Rafael Fernandes <rafael.porpeta@gmail.com>
+ * @version %I%, %G%
+ */
+
+/* Estilo para o corpo da página */
+body {
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+    background-color: #00BAFF;
+}
+
+/* Estilo padrao para as imagens da página */
+img {
+    margin: 0px;
+    border: 0px;
+    padding: 0px;
+}

@@ -1,0 +1,32 @@
+/**
+ * Conjunto de estilos que compoem o Menu do Aplicativo.
+ *
+ * @author Rafael Fernandes <rafael.porpeta@gmail.com>
+ * @version %I%, %G%
+ */
+
+/* Tamanho e posicionamento do Menu */
+.menu {
+    position: fixed;
+    right: 20px;
+    bottom: 10px;
+    width: 100%;
+    min-width: 1250px;
+    text-align: right;
+    z-index: 4;
+    /* border: dashed 2px #FF0000; */ /* <DEBUG> */
+}
+
+/* Tamanho do Item de Menu (Normal) */
+.item {
+    width: 10%;
+    height: 10%;
+    /* border: dashed 2px #FF0000; */ /* <DEBUG> */
+}
+
+/* Tamanho do Item de Menu (Selecionado) */
+.itemSelected {
+    width: 12%;
+    height: 12%;
+    /* border: dashed 2px #FF0000; */ /* <DEBUG> */
+}

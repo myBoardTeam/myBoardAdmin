@@ -1,0 +1,35 @@
+#---------------------------------------------------------------
+# Sistema: myBoard
+# Módulo: myBoardAdmin
+# Descrição: Aplicativo de administração dos serviços remotos do
+# Sistema.
+#---------------------------------------------------------------
+
+Sistema de lousa eletrônica com recursos multimídia e de
+interação que facilitem ao professor ministrar suas aulas com
+maior dinamismo.
+
+O sistema possuirá um controle de perfil e acesso centralizado
+que possibilitará cada usuário ter suas preferências carregadas
+dinamicamente e independente do terminal.
+
+Será possível ministrar as aulas da mesma forma como ocorrem em
+uma lousa tradicional, utilizando a um conjunto de sensores e
+apontadores especiais, aonde o professor poderá criar e trabalhar
+com múltiplas lousas simultaneamente.
+
+O ambiente de trabalho poderá ser completamente customizado de
+acordo com as preferências do usuário (professor).
+
+O professor contará ainda com um conjunto de ferramentas de
+multimídia genéricas (tocador de áudio/vídeo, suporte a
+apresentações, animações, etc.) e ferramentas especificas de cada
+matéria suportada a serem criadas/personalizadas em formato de
+plug-in para o sistema.
+
+Ao terminar uma aula o professor poderá disponibilizar
+diretamente (via correio eletrônico) aos alunos o material gerado
+durante a aula.
+
+Será possível também efetuar o controle de presença desses alunos
+dentro do próprio sistema. 

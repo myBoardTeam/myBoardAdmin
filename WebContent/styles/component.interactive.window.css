@@ -1,0 +1,74 @@
+/**
+ * Conjunto de estilos que compoem a Janela e seus componentes diretos.
+ *
+ * @author Rafael Fernandes <rafael.porpeta@gmail.com>
+ * @version %I%, %G%
+ */
+
+/* Tamanho e posicionamento do Header da Janela */
+.windowHeader {
+    position: fixed;
+    top: -60px;
+    left: 0px;
+    width: 65%;
+    margin: 100px 100px 0px 50px;
+    min-width: 820px;
+    border: solid transparent;
+    border-width: 25px 50px 0px 50px;
+    z-index: 4;
+    /* border: dashed 2px #FF0000; */ /* <DEBUG> */
+}
+
+/* Tamanho e posicionamento do Titulo da Janela */
+.windowTitle {
+    position: relative;
+    top: 0px;
+    left: -10px;
+    float: left;
+    font-family: Verdana, Arial, Sans-serif;
+    font-size: 2em;
+    font-weight: 900;
+    font-variant: small-caps;
+    color: #FFFFFF;
+    filter: alpha(opacity=70); /* ie */
+    opacity: .7; /* mozilla */
+    /* border: dashed 2px #FF0000; */ /* <DEBUG> */
+}
+
+/* Tamanho e posicionamento do Botão de Canto */
+.cornerButton {
+    position: relative;
+    top: 10px;
+    right: -41px;
+    width: 53px;
+    height: 70px;
+    float: right;
+    /* border: dashed 2px #FF0000; */ /* <DEBUG> */
+}
+
+/* Tamanho e posicionamento do fundo da Janela */
+.windowBackground {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 65%;
+    height: 65%;
+    margin: 100px 100px 200px 50px;
+    min-width: 820px;
+    border: solid transparent;
+    border-width: 25px 50px 50px 50px;
+    border-image: url("drawable/window/background.png") 25 50 50 50;
+    z-index: 3;
+    /* border: dashed 2px #FF0000; */ /* <DEBUG> */
+}
+
+/* Tamanho e posicionamento do Conteúdo da Janela */
+.windowContent {
+    height: 100%;
+	padding: 0px;
+    font-family: Verdana, Arial, Sans-serif;
+    font-size: 0.9em;
+    color: #FFFFFF;
+    overflow: auto;
+    /* border: dashed 2px #FF0000; */ /* <DEBUG> */
+}
