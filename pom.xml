@@ -7,6 +7,11 @@
 	<packaging>war</packaging>
 	<name>myBoard - Adminitration</name>
 	<description>myBoard Adminitration System</description>
+	<url>https://github.com/myBoardTeam/myBoardAdmin</url>
+	<organization>
+		<name>myBoardTeam</name>
+		<url>https://github.com/myBoardTeam</url>
+	</organization>
 	<repositories>
 		<repository>
 			<id>JBoss repository</id>
@@ -35,8 +40,6 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
-		<!-- <dependency> <groupId>log4j</groupId> <artifactId>log4j</artifactId> 
-			<version>1.2.16</version> <type>bundle</type> <scope>compile</scope> </dependency> -->
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
@@ -49,14 +52,20 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-	<organization>
-		<name>myBoardTeam</name>
-	</organization>
 	<build>
 		<finalName>${artifactId}</finalName>
-	    <sourceDirectory>src</sourceDirectory>
+		<sourceDirectory>src</sourceDirectory>
 		<pluginManagement>
 			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>2.3.1</version>
+					<configuration>
+						<source>1.6</source>
+						<target>1.6</target>
+					</configuration>
+				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-war-plugin</artifactId>
@@ -71,6 +80,4 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-	<modules>
-	</modules>
 </project>

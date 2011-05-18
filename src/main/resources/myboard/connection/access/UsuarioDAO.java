@@ -1,5 +1,7 @@
 package main.resources.myboard.connection.access;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -73,6 +75,22 @@ public class UsuarioDAO {
 		}
 		// Retorna o cliente consultado.
 		return usuario;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Usuario> findAll() {
+		EntityManager entityManager = getEntityManager();
+		List<Usuario> list = null;
+		try {
+			// Consulta o cliente pelo ID.
+			list = entityManager.createQuery("from usuario").getResultList(); 
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			entityManager.close();
+		}
+		// Retorna o cliente consultado.
+		return list;
 	}
 
 /*	public void ReturnMaxID() {
