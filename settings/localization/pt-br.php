@@ -34,4 +34,16 @@ define( "LOC_EMSG_LAYOUT_EMPTY", "Conteúdo Vazio" );
 
 // Dashboard
 define( "LOC_DASHBOARD_TITLE", "Menu Principal" );
+
+// Cadastro de Usuários
+define( "LOC_USUARIO_WINDOW_TITLE", "Cadastro de Usuários" );
+
+// Cadastro de Matérias
+define( "LOC_MATERIA_WINDOW_TITLE", "Cadastro de Matérias" );
+
+// Cadastro de Perfis
+define( "LOC_PERFIL_WINDOW_TITLE", "Cadastro de Perfis" );
+
+// Cadastro de Ferramentas
+define( "LOC_FERRAMENTA_WINDOW_TITLE", "Cadastro de Ferramentas" );
 ?>

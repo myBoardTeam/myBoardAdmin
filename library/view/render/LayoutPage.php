@@ -3,7 +3,7 @@
  * Layout Web para Página padrão.
  */
 
-require_once(PROJECT_PATH."/library/view/render/InterfaceLayout.php");
+require_once(PROJECT_PATH."/library/view/render/AbstractLayout.php");
 
 /**
  * Classe contendo o Layout Web externo da página.
@@ -11,7 +11,7 @@ require_once(PROJECT_PATH."/library/view/render/InterfaceLayout.php");
  * @author myBoardTeam <myboardteam@gmail.com>
  * @version %I%, %G%
  */
-class LayoutPage implements InterfaceLayout {
+class LayoutPage extends AbstractLayout {
 	private $title;
 	private $stylesheets;
 	private $scripts;
@@ -158,6 +158,21 @@ class LayoutPage implements InterfaceLayout {
 	 */
 	public function getScripts() {
 		return($this->scripts);
+	}
+
+	/**
+	 * Obtem os Headers para a Página
+	 * 
+	 * @author myBoardTeam <myboardteam@gmail.com>
+	 * @version %I%, %G%
+	 */
+	public function getHeaders() {
+		header( "Expires: Sat, 26 Jul 1997 05:00:00 GMT" ); 
+		header( "Last-Modified: " . gmdate( "D, d M Y H:i:s" ) . " GMT" ); 
+		header( "Cache-Control: no-store, no-cache, must-revalidate" ); 
+		header( "Cache-Control: post-check=0, pre-check=0", false ); 
+		header( "Pragma: no-cache" );
+		header( "Content-Type: text/html; charset=iso-8859-1" );
 	}
 }
 ?>

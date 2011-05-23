@@ -11,8 +11,8 @@ require_once(PROJECT_PATH."/library/util/AbstractMessageLog.php");
  * @author myBoardTeam <myboardteam@gmail.com>
  * @version %I%, %G%
  */
-interface InterfaceLayout extends AbstractMessageLog {
-	protected $layout_string;	
+abstract class AbstractLayout extends AbstractMessageLog {
+	protected $layout_string;
 	protected $content;
 	
 	/**
@@ -31,7 +31,7 @@ interface InterfaceLayout extends AbstractMessageLog {
 		$this->setLayout();
 	}
 
-	public function setLayout();
+	public abstract function setLayout();
 	
 	/**
 	 * Define o Conteúdo
@@ -59,7 +59,7 @@ interface InterfaceLayout extends AbstractMessageLog {
 		if ( $this->layout_string == "" )
 			$this->addMessage($this->get_class(), $fname, MB_ERROR, MB_HIDDEN, LOC_EMSG_LAYOUT_EMPTY);
 			
-		return this->layout_string;
+		return $this->layout_string;
 	}
 
 	/**

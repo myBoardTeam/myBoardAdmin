@@ -3,7 +3,7 @@
  * Acesso a Tabela de Usuários no Banco de Dados
  */
 
-require_once(PROJECT_PATH."/library/model/access/InterfaceAccess.php");
+require_once(PROJECT_PATH."/library/model/access/AbstractAccess.php");
 require_once(PROJECT_PATH."/library/model/database/Usuario.php");
 
 /**
@@ -12,7 +12,7 @@ require_once(PROJECT_PATH."/library/model/database/Usuario.php");
  * @author myBoardTeam <myboardteam@gmail.com>
  * @version %I%, %G%
  */
-class AccessUsuario implements InterfaceAccess {
+class AccessUsuario extends AbstractAccess {
 
 	/**
 	 * Inserir Usuário no Banco de Dados

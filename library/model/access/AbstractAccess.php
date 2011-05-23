@@ -12,7 +12,7 @@ require_once(PROJECT_PATH."/library/model/connection/MySQL.php");
  * @author myBoardTeam <myboardteam@gmail.com>
  * @version %I%, %G%
  */
-interface InterfaceAccess extends AbstractMessageLog {
+abstract class AbstractAccess extends AbstractMessageLog {
 	protected $database_connection;
 	protected $result;
 	
@@ -54,10 +54,10 @@ interface InterfaceAccess extends AbstractMessageLog {
 		return($this->result);
 	}
 
-	public function insertItem( $item );
-	public function updateItem( $item );
-	public function deleteItem( $id );
-	public function find( $id );
-	public function listAll();
+	public abstract function insertItem( $item );
+	public abstract function updateItem( $item );
+	public abstract function deleteItem( $id );
+	public abstract function find( $id );
+	public abstract function listAll();
 }
 ?>

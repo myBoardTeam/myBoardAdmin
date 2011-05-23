@@ -4,9 +4,10 @@
  */
 
 require_once("settings/configuration.php");
-require_once(PROJECT_PATH."settings/language/".PROJECT_LANGUAGE.".php");
+require_once(PROJECT_PATH."/settings/localization/".PROJECT_LANGUAGE.".php");
 require_once(PROJECT_PATH."/library/util/AbstractMessageLog.php");
 require_once(PROJECT_PATH."/library/view/render/LayoutPage.php");
+require_once(PROJECT_PATH."/library/view/render/LayoutMenu.php");
 
 $fname = "DashBoard()";
 
@@ -25,7 +26,9 @@ $array_script = array(
 	"scripts/jquery.gradient.js"
 );
 
-$page_content = new LayoutMenu();
+$menu_content = new LayoutMenu();
 $page_content = new LayoutPage($title, $array_script, $array_stylesheet, $menu_content->getLayout());
+
+$page_content->getHeaders();
 echo($page_content->getLayout());
 ?>

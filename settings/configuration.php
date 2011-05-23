@@ -4,9 +4,9 @@
  */
 
 // Localização do Projeto 
-define( "PROJECT_NAME", "myBoard" );
-define( "PROJECT_PATH", $_SERVER["DOCUMENT_ROOT"]."/myBoard" );
-define( "PROJECT_ADDRESS", "http://localhost:8080/myBoard" );
+define( "PROJECT_NAME", "myBoardAdmin" );
+define( "PROJECT_PATH", $_SERVER["DOCUMENT_ROOT"]."/myBoardAdmin" );
+define( "PROJECT_ADDRESS", "http://localhost:8080/myBoardAdmin" );
 define( "PROJECT_LANGUAGE", "pt-br" );
  
 // Dados de Conexão com Banco de Dados 
