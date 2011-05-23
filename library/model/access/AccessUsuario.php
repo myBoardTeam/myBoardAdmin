@@ -25,11 +25,11 @@ class AccessUsuario implements InterfaceAccess {
 	public function insertItem( $item ) {
 		$fname = "insertItem()";
 		
-		if ( $item->getIDTipoUsuario() == "" ) { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, "Tipo de Usuário deve ser informado."); $this->setResult(false); }
-		if ( $item->getNome() == "") { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, "Nome do Usuário deve ser informado."); $this->setResult(false); }
-		if ( $item->getUsuario() == "") { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, "Login do Usuário deve ser informado."); $this->setResult(false); }
-		if ( $item->getSenha() == "") { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, "Senha do Usuário deve ser informada."); $this->setResult(false); }
-		if ( $item->getEMail() == "" ) { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, "E-Mail do Usuário deve ser informado."); $this->setResult(false); }
+		if ( $item->getIDTipoUsuario() == "" ) { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_USUARIO_02); $this->setResult(false); }
+		if ( $item->getNome() == "") { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_USUARIO_03); $this->setResult(false); }
+		if ( $item->getUsuario() == "") { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_USUARIO_04); $this->setResult(false); }
+		if ( $item->getSenha() == "") { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_USUARIO_05); $this->setResult(false); }
+		if ( $item->getEMail() == "" ) { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_USUARIO_06); $this->setResult(false); }
 			
 		$query  = "insert into usuario(";
 		$query .= " id_tipo_usuario,";
@@ -48,7 +48,7 @@ class AccessUsuario implements InterfaceAccess {
 		$query .= " )";
 			
 		if (!$result = $this->database_connection->runQuery( $query, DB_INSERT ))
-			$this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, "Impossível Inserir Usuário. Consulte o Administrador do Sistema.");
+			$this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_INS_01);
 
 		$this->setResult($result);
 	}
@@ -64,12 +64,12 @@ class AccessUsuario implements InterfaceAccess {
 	public function updateItem( $item ) {
 		$fname = "updateItem()";
 		
-		if ( !$item->getIDUsuario() > 0 ) { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, "Usuário deve ser informado."); $this->setResult(false); }
-		if ( $item->getIDTipoUsuario() == "" ) { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, "Tipo de Usuário deve ser informado."); $this->setResult(false); }
-		if ( $item->getNome() == "") { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, "Nome do Usuário deve ser informado."); $this->setResult(false); }
-		if ( $item->getUsuario() == "") { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, "Login do Usuário deve ser informado."); $this->setResult(false); }
-		if ( $item->getSenha() == "") { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, "Senha do Usuário deve ser informada."); $this->setResult(false); }
-		if ( $item->getEMail() == "" ) { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, "E-Mail do Usuário deve ser informado."); $this->setResult(false); }
+		if ( !$item->getIDUsuario() > 0 ) { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_USUARIO_01); $this->setResult(false); }
+		if ( $item->getIDTipoUsuario() == "" ) { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_USUARIO_02); $this->setResult(false); }
+		if ( $item->getNome() == "") { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_USUARIO_03); $this->setResult(false); }
+		if ( $item->getUsuario() == "") { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_USUARIO_04); $this->setResult(false); }
+		if ( $item->getSenha() == "") { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_USUARIO_05); $this->setResult(false); }
+		if ( $item->getEMail() == "" ) { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_USUARIO_06); $this->setResult(false); }
 			
 		$query  = "update usuario set";
 		$query .= " id_tipo_usuario = '".$item->getIDTipoUsuario()."',";
@@ -81,7 +81,7 @@ class AccessUsuario implements InterfaceAccess {
 		$query .= " where id_usuario = ".$item->getIDUsuario();
 			
 		if (!$result = $this->database_connection->runQuery( $query, DB_UPDATE ))
-			$this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, "Impossível Alterar Usuário. Consulte o Administrador do Sistema.");
+			$this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_UPD_01);
 			
 		$this->setResult($result);		
 	}
@@ -97,23 +97,23 @@ class AccessUsuario implements InterfaceAccess {
 	public function deleteItem( $id ) {
 		$fname = "deleteItem()";
 
-		if ( !$id > 0 ) { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, "Usuário deve ser informado."); $this->setResult(false); }
+		if ( !$id > 0 ) { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_USUARIO_01); $this->setResult(false); }
 		
 		$query = "delete from usuario_perfil where id_usuario = ".$id;
 		if (!$result = $this->database_connection->runQuery( $query, DB_UPDATE ))
-			$this->addMessage($this->get_class(), $fname, MB_WARNING, MB_SHOW, "Impossível Excluir Perfis do Usuário. Consulte o Administrador do Sistema.");
+			$this->addMessage($this->get_class(), $fname, MB_WARNING, MB_SHOW, LOC_EMSG_ACC_USUARIO_DEL_01);
 			
 		$query = "delete from usuario_materia where id_usuario = ".$id;
 		if (!$result = $this->database_connection->runQuery( $query, DB_UPDATE ))
-			$this->addMessage($this->get_class(), $fname, MB_WARNING, MB_SHOW, "Impossível Excluir Matérias do Usuário. Consulte o Administrador do Sistema.");
+			$this->addMessage($this->get_class(), $fname, MB_WARNING, MB_SHOW, LOC_EMSG_ACC_USUARIO_DEL_02);
 			
 		$query = "delete from usuario_permissao where id_usuario = ".$id;
 		if (!$result = $this->database_connection->runQuery( $query, DB_UPDATE ))
-			$this->addMessage($this->get_class(), $fname, MB_WARNING, MB_SHOW, "Impossível Excluir Permissões do Usuário. Consulte o Administrador do Sistema.");
+			$this->addMessage($this->get_class(), $fname, MB_WARNING, MB_SHOW, LOC_EMSG_ACC_USUARIO_DEL_03);
 			
 		$query = "delete from usuario where id_usuario = ".$id;
 		if (!$result = $this->database_connection->runQuery( $query, DB_UPDATE ))
-			$this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, "Impossível Excluir Usuário. Consulte o Administrador do Sistema.");
+			$this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_DEL_04);
 			
 		$this->setResult($result);
 	}
@@ -129,12 +129,12 @@ class AccessUsuario implements InterfaceAccess {
 	public function find( $id ) {
 		$fname = "find()";
 		
-		if ( !$id > 0 ) { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, "Usuário deve ser informado."); $this->setResult(false); }
+		if ( !$id > 0 ) { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_USUARIO_01); $this->setResult(false); }
 
 		$query = "select * from usuario where id_usuario = ".$id." limit 1";
 		
 		if (!$result = $this->database_connection->runQuery( $query, DB_SELECT )) {
-			$this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, "Impossível Selecionar Usuário. Consulte o Administrador do Sistema.");
+			$this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_FND_01);
 			$this->setResult($result);
 		} else {
 			$usuario = new Usuario();
@@ -162,7 +162,7 @@ class AccessUsuario implements InterfaceAccess {
 		$query = "select * from usuario";
 		
 		if (!$result = $this->database_connection->runQuery( $query, DB_SELECT )) {
-			$this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, "Impossível Listar Usuários. Consulte o Administrador do Sistema.");
+			$this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_LST_01);
 			$this->setResult($result);
 		} else {
 			foreach ( $result as $array_item ) {
