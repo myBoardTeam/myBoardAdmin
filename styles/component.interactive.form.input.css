@@ -1,0 +1,20 @@
+/**
+ * Conjunto de estilos que compoem um Input Text.
+ *
+ * @author Rafael Fernandes <rafael.porpeta@gmail.com>
+ * @version %I%, %G%
+ */
+
+/* Estilo do Input Text */
+.inputText {
+    width: 95%;
+    margin-top: 5px;
+    padding: 0px;
+    border: solid transparent;
+    border-width: 15px 20px 20px 15px;
+    border-image: url("drawable/form/textbox/normal.png") 15 20 20 15;
+	font-family: Verdana, Arial, Sans-serif;
+    font-size: 0.9em;
+    color: #FFFFFF;
+    /* border: dashed 2px #FF0000; */ /* <DEBUG> */
+}
