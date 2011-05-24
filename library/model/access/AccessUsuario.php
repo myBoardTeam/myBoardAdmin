@@ -5,6 +5,10 @@
 
 require_once(PROJECT_PATH."/library/model/access/AbstractAccess.php");
 require_once(PROJECT_PATH."/library/model/database/Usuario.php");
+require_once(PROJECT_PATH."/library/model/database/TipoUsuario.php");
+require_once(PROJECT_PATH."/library/model/database/Permissao.php");
+require_once(PROJECT_PATH."/library/model/database/Materia.php");
+require_once(PROJECT_PATH."/library/model/database/PerfilGenerico.php");
 
 /**
  * Classe de acesso a Tabela de Usuários no Banco de Dados
