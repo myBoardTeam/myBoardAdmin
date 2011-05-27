@@ -25,12 +25,12 @@ class LayoutWindow extends AbstractLayout {
 	 * @author myBoardTeam <myboardteam@gmail.com>
 	 * @version %I%, %G%
 	 */
-	function __construct( $t, $c = "" ) {
+	function __construct( $p_title, $p_content = "" ) {
 		$fname = "constructObject()";
 
-		$this->setTitle($t);
+		$this->setTitle($p_title);
 
-		parent::__construct($c);
+		parent::__construct($p_content);
 	}
 
 	/**
@@ -86,8 +86,8 @@ class LayoutWindow extends AbstractLayout {
 	 * @author myBoardTeam <myboardteam@gmail.com>
 	 * @version %I%, %G%
 	 */	
-	public function setTitle( $value ) {
-		$this->title = $value;
+	public function setTitle( $p_value ) {
+		$this->title = $p_value;
 	}
 	
 	/**

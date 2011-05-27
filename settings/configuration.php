@@ -30,4 +30,12 @@ define( "MB_NOTICE", "3" );
 define( "MB_SHOW", "1");
 define( "MB_HIDDEN", "2");
 
+// Tipos de Formulario
+define( "FORM_INSERT", "1");
+define( "FORM_UPDATE", "2");
+
+// Tamanho de Campos do Formulario
+define( "FIELD_SMALL", "20%");
+define( "FIELD_MEDIUM", "45%");
+define( "FIELD_LARGE", "95%");
 ?>

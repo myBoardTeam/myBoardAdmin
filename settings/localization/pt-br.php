@@ -31,12 +31,26 @@ define( "LOC_EMSG_ACC_USUARIO_LST_01", "Impossível Listar Usuários. Consulte o A
 
 // Mensagens de Layout
 define( "LOC_EMSG_LAYOUT_EMPTY", "Conteúdo Vazio" );
+define( "LOC_EMSG_LAYOUT_LIST", "Estrutura de Vetor Inválida" );
 
 // Dashboard
 define( "LOC_DASHBOARD_TITLE", "Menu Principal" );
 
 // Cadastro de Usuários
 define( "LOC_USUARIO_WINDOW_TITLE", "Cadastro de Usuários" );
+define( "LOC_USUARIO_FORM_INSERT_TITLE", "Criar Novo Usuário" );
+define( "LOC_USUARIO_FORM_UPDATE_TITLE", "Alterar Usuário" );
+define( "LOC_USUARIO_LBL_USER_TYPE", "Tipo de Usuário" );
+define( "LOC_USUARIO_LBL_NAME", "Nome" );
+define( "LOC_USUARIO_LBL_LOGIN", "Login" );
+define( "LOC_USUARIO_LBL_PWD_NEW", "Nova Senha" );
+define( "LOC_USUARIO_LBL_PWD_CONF", "Confirmar Senha" );
+define( "LOC_USUARIO_LBL_BIRTH", "Data de Nascimento" );
+define( "LOC_USUARIO_LBL_EMAIL", "E-Mail" );
+define( "LOC_USUARIO_LIST_TITLE", "Listagem de Usuários" );
+define( "LOC_USUARIO_COL_NAME", "Nome" );
+define( "LOC_USUARIO_COL_LOGIN", "Login" );
+define( "LOC_USUARIO_COL_EMAIL", "E-Mail" );
 
 // Cadastro de Matérias
 define( "LOC_MATERIA_WINDOW_TITLE", "Cadastro de Matérias" );

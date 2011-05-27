@@ -30,9 +30,9 @@ class AccessUsuario extends AbstractAccess {
 		$fname = "insertItem()";
 		
 		if ( $item->getIDTipoUsuario() == "" ) { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_USUARIO_02); $this->setResult(false); }
-		if ( $item->getNome() == "") { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_USUARIO_03); $this->setResult(false); }
-		if ( $item->getUsuario() == "") { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_USUARIO_04); $this->setResult(false); }
-		if ( $item->getSenha() == "") { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_USUARIO_05); $this->setResult(false); }
+		if ( $item->getNome() == "" ) { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_USUARIO_03); $this->setResult(false); }
+		if ( $item->getUsuario() == "" ) { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_USUARIO_04); $this->setResult(false); }
+		if ( $item->getSenhaNova() != $item->getSenhaConfirma() ) { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_USUARIO_05); $this->setResult(false); }
 		if ( $item->getEMail() == "" ) { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_USUARIO_06); $this->setResult(false); }
 			
 		$query  = "insert into usuario(";
@@ -46,7 +46,7 @@ class AccessUsuario extends AbstractAccess {
 		$query .= " '".$item->getIDTipoUsuario()."',";
 		$query .= " '".addslashes($item->getNome())."',";
 		$query .= " '".addslashes($item->getUsuario())."',";
-		$query .= " '".addslashes($item->getSenha())."',";
+		$query .= " '".addslashes($item->getSenhaNova())."',";
 		$query .= " '".$item->getDataNascimento()."',";
 		$query .= " '".addslashes($item->getEMail())."'";
 		$query .= " )";
@@ -70,16 +70,16 @@ class AccessUsuario extends AbstractAccess {
 		
 		if ( !$item->getIDUsuario() > 0 ) { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_USUARIO_01); $this->setResult(false); }
 		if ( $item->getIDTipoUsuario() == "" ) { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_USUARIO_02); $this->setResult(false); }
-		if ( $item->getNome() == "") { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_USUARIO_03); $this->setResult(false); }
-		if ( $item->getUsuario() == "") { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_USUARIO_04); $this->setResult(false); }
-		if ( $item->getSenha() == "") { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_USUARIO_05); $this->setResult(false); }
+		if ( $item->getNome() == "" ) { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_USUARIO_03); $this->setResult(false); }
+		if ( $item->getUsuario() == "" ) { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_USUARIO_04); $this->setResult(false); }
+		if ( $item->getSenhaNova() != $item->getSenhaConfirma() ) { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_USUARIO_05); $this->setResult(false); }
 		if ( $item->getEMail() == "" ) { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_USUARIO_06); $this->setResult(false); }
 			
 		$query  = "update usuario set";
 		$query .= " id_tipo_usuario = '".$item->getIDTipoUsuario()."',";
 		$query .= " nome = '".addslashes($item->getNome())."',";
 		$query .= " usuario = '".addslashes($item->getUsuario())."',";
-		$query .= " senha = '".addslashes($item->getSenha())."',";
+		$query .= ( $item->getSenhaNova() != "" ) ? " senha = '".addslashes($item->getSenhaNova())."'," : "";
 		$query .= " dt_nascimento = '".$item->getDataNascimento()."',";
 		$query .= " email = '".addslashes($item->getEMail())."'";
 		$query .= " where id_usuario = ".$item->getIDUsuario();
@@ -146,7 +146,6 @@ class AccessUsuario extends AbstractAccess {
 			$usuario->setIDTipoUsuario($result[0]["id_tipo_usuario"]);
 			$usuario->setNome($result[0]["nome"]);
 			$usuario->setUsuario($result[0]["usuario"]);
-			$usuario->setSenha($result[0]["senha"]);
 			$usuario->setDataNascimento($result[0]["dt_nascimento"]);
 			$usuario->setEMail($result[0]["email"]);
 			
@@ -175,7 +174,6 @@ class AccessUsuario extends AbstractAccess {
 				$usuario->setIDTipoUsuario($array_item["id_tipo_usuario"]);
 				$usuario->setNome($array_item["nome"]);
 				$usuario->setUsuario($array_item["usuario"]);
-				$usuario->setSenha($array_item["senha"]);
 				$usuario->setDataNascimento($array_item["dt_nascimento"]);
 				$usuario->setEMail($array_item["email"]);
 				

@@ -14,7 +14,8 @@ class Usuario {
 	private $id_tipo_usuario;
 	private $nome;
 	private $usuario;
-	private $senha;
+	private $senha_nova;
+	private $senha_confirma;
 	private $dt_nascimento;
 	private $email;
 
@@ -66,15 +67,27 @@ class Usuario {
 	}
 
 	/**
-	 * Define o Senha do Usuário
+	 * Define o Senha Nova do Usuário
 	 * 
 	 * @param $value Senha do Usuário
 	 *
 	 * @author myBoardTeam <myboardteam@gmail.com>
 	 * @version %I%, %G%
 	 */	
-	public function setSenha( $value ) {
-		$this->senha = $value;
+	public function setSenhaNova( $value ) {
+		$this->senha_nova = $value;
+	}
+
+	/**
+	 * Define o Senha de Confirmacao do Usuário
+	 * 
+	 * @param $value Senha do Usuário
+	 *
+	 * @author myBoardTeam <myboardteam@gmail.com>
+	 * @version %I%, %G%
+	 */	
+	public function setSenhaConfirma( $value ) {
+		$this->senha_confirma = $value;
 	}
 
 	/**
@@ -150,15 +163,27 @@ class Usuario {
 	}
 	
 	/**
-	 * Obtem o Senha do Usuário
+	 * Obtem o Senha Nova do Usuário
 	 * 
 	 * @return String
 	 *
 	 * @author myBoardTeam <myboardteam@gmail.com>
 	 * @version %I%, %G%
 	 */
-	public function getSenha() {
-		return($this->senha);
+	public function getSenhaNova() {
+		return($this->senha_nova);
+	}
+	
+	/**
+	 * Obtem o Senha de Confirmação do Usuário
+	 * 
+	 * @return String
+	 *
+	 * @author myBoardTeam <myboardteam@gmail.com>
+	 * @version %I%, %G%
+	 */
+	public function getSenhaConfirma() {
+		return($this->senha_confirma);
 	}
 	
 	/**

@@ -39,7 +39,8 @@ class LayoutMenu extends AbstractLayout {
 	public function setLayout() {
 		$fname = "setLayout()";
 
-		$this->layout_string  = "    <!-- <DASHBOARD> -->\n";
+		$this->layout_string  = "";
+		$this->layout_string .= "    <!-- <DASHBOARD> -->\n";
 		$this->layout_string .= "    <div class=\"menu\">\n";
 		$this->layout_string .= "      <script type=\"text/javascript\" charset=\"utf-8\">\n";
 		$this->layout_string .= "        \$(function() {\n";

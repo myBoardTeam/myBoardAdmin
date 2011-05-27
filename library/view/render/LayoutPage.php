@@ -13,8 +13,8 @@ require_once(PROJECT_PATH."/library/view/render/AbstractLayout.php");
  */
 class LayoutPage extends AbstractLayout {
 	private $title;
-	private $stylesheets;
 	private $scripts;
+	private $stylesheets;
 	
 	/**
 	 * Construtor da Classe
@@ -27,14 +27,14 @@ class LayoutPage extends AbstractLayout {
 	 * @author myBoardTeam <myboardteam@gmail.com>
 	 * @version %I%, %G%
 	 */
-	function __construct( $t, $scr, $css, $c = "" ) {
+	function __construct( $p_title, $p_scripts, $p_stylesheets, $p_content = "" ) {
 		$fname = "constructObject()";
 
-		$this->setTitle(PROJECT_NAME." - ".$t);
-		$this->setStyleSheets($css);
-		$this->setScripts($scr);
+		$this->setTitle(PROJECT_NAME." - ".$p_title);
+		$this->setScripts($p_scripts);
+		$this->setStyleSheets($p_stylesheets);
 
-		parent::__construct($c);
+		parent::__construct($p_content);
 	}
 
 	/**
@@ -96,8 +96,8 @@ class LayoutPage extends AbstractLayout {
 	 * @author myBoardTeam <myboardteam@gmail.com>
 	 * @version %I%, %G%
 	 */	
-	public function setTitle( $value ) {
-		$this->title = $value;
+	public function setTitle( $p_value ) {
+		$this->title = $p_value;
 	}
 	
 	/**
@@ -108,8 +108,8 @@ class LayoutPage extends AbstractLayout {
 	 * @author myBoardTeam <myboardteam@gmail.com>
 	 * @version %I%, %G%
 	 */	
-	public function setStyleSheets( $value ) {
-		$this->stylesheets = $value;
+	public function setStyleSheets( $p_value ) {
+		$this->stylesheets = $p_value;
 	}
 	
 	/**
@@ -120,8 +120,8 @@ class LayoutPage extends AbstractLayout {
 	 * @author myBoardTeam <myboardteam@gmail.com>
 	 * @version %I%, %G%
 	 */	
-	public function setScripts( $value ) {
-		$this->scripts = $value;
+	public function setScripts( $p_value ) {
+		$this->scripts = $p_value;
 	}
 	
 	/**

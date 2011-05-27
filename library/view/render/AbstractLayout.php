@@ -18,15 +18,15 @@ abstract class AbstractLayout extends AbstractMessageLog {
 	/**
 	 * Construtor da Classe
 	 * 
-	 * @param $c Conteúdo a ser incluído no Objeto
+	 * @param $p_content Conteúdo a ser incluído no Objeto
 	 *
 	 * @author myBoardTeam <myboardteam@gmail.com>
 	 * @version %I%, %G%
 	 */
-	function __construct( $c = "" ) {
+	function __construct( $p_content = "" ) {
 		$fname = "constructObject()";
 
-		$this->setContent($c);
+		$this->setContent($p_content);
 		
 		$this->setLayout();
 	}
@@ -36,13 +36,13 @@ abstract class AbstractLayout extends AbstractMessageLog {
 	/**
 	 * Define o Conteúdo
 	 * 
-	 * @param $value Conteúdo
+	 * @param $p_value Conteúdo
 	 *
 	 * @author myBoardTeam <myboardteam@gmail.com>
 	 * @version %I%, %G%
 	 */	
-	public function setContent( $value ) {
-		$this->content = $value;
+	public function setContent( $p_value ) {
+		$this->content = $p_value;
 	}
 	
 	/**
