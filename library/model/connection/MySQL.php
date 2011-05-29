@@ -54,7 +54,7 @@ class MySQL extends AbstractMessageLog {
 		if ($this->database_connection)
 			mysql_close($this->database_connection);
 		else
-			$this->addMessage($this->get_class(), $fname, MB_ERROR, MB_HIDDEN, LOC_EMSG_DB_MYSQL_CLOSE, mysql_error());
+			$this->addMessage(get_class($this), $fname, MB_ERROR, MB_HIDDEN, LOC_EMSG_DB_MYSQL_CLOSE, mysql_error());
 	}
 
 	/**
@@ -68,10 +68,10 @@ class MySQL extends AbstractMessageLog {
 		$this->database_connection = mysql_connect($this->getHostName().":".$this->getHostPort(), $this->getUserName(), $this->getPassword());
 
 		if (!$this->database_connection)
-			$this->addMessage($this->get_class(), $fname, MB_ERROR, MB_HIDDEN, LOC_EMSG_DB_MYSQL_CONNECT, mysql_error());
+			$this->addMessage(get_class($this), $fname, MB_ERROR, MB_HIDDEN, LOC_EMSG_DB_MYSQL_CONNECT, mysql_error());
 		else
 			if (!mysql_select_db($this->getDatabase(), $this->database_connection))
-				$this->addMessage($this->get_class(), $fname, MB_ERROR, MB_HIDDEN, LOC_EMSG_DB_MYSQL_SELECT, mysql_error());
+				$this->addMessage(get_class($this), $fname, MB_ERROR, MB_HIDDEN, LOC_EMSG_DB_MYSQL_SELECT, mysql_error());
 	}
 
 	/**
@@ -91,16 +91,16 @@ class MySQL extends AbstractMessageLog {
 			
 			if ($this->database_connection) {
 				if (!$this->resultset = mysql_query( $q, $this->database_connection ))
-					$this->addMessage($this->get_class(), $fname, MB_ERROR, MB_HIDDEN, LOC_EMSG_DB_MYSQL_QUERY_SYNTAX, mysql_error());
+					$this->addMessage(get_class($this), $fname, MB_ERROR, MB_HIDDEN, LOC_EMSG_DB_MYSQL_QUERY_SYNTAX, mysql_error());
 				else {
 					$this->query = $q;
 					if ( $type != DB_UPDATE ) return($this->getResult($type));
 					return(true);
 				}
 			} else
-				$this->addMessage($this->get_class(), $fname, MB_ERROR, MB_HIDDEN, LOC_EMSG_DB_MYSQL_QUERY_CONNECT, $q);
+				$this->addMessage(get_class($this), $fname, MB_ERROR, MB_HIDDEN, LOC_EMSG_DB_MYSQL_QUERY_CONNECT, $q);
 		} else
-			$this->addMessage($this->get_class(), $fname, MB_ERROR, MB_HIDDEN, LOC_EMSG_DB_MYSQL_QUERY_EMPTY);
+			$this->addMessage(get_class($this), $fname, MB_ERROR, MB_HIDDEN, LOC_EMSG_DB_MYSQL_QUERY_EMPTY);
 		return(false);
 	}
 
@@ -118,12 +118,12 @@ class MySQL extends AbstractMessageLog {
 		if ( $this->query != "" ) {
 			if ($type == DB_INSERT) {
 				if (!$return = mysql_insert_id()) {
-					$this->addMessage($this->get_class(), $fname, MB_WARNING, MB_HIDDEN, LOC_EMSG_DB_MYSQL_INSERT_EMPTY);
+					$this->addMessage(get_class($this), $fname, MB_WARNING, MB_HIDDEN, LOC_EMSG_DB_MYSQL_INSERT_EMPTY);
 				} else return($return);
 			} else if ($type == DB_SELECT) {
 				while ( $array_item = mysql_fetch_array($this->resultset, $type) ) $return[] = $array_item;
 				if ( count($return) > 0 ) return($return);
-				else $this->addMessage($this->get_class(), $fname, MB_WARNING, MB_HIDDEN, LOC_EMSG_DB_MYSQL_RS_EMPTY);
+				else $this->addMessage(get_class($this), $fname, MB_WARNING, MB_HIDDEN, LOC_EMSG_DB_MYSQL_RS_EMPTY);
 			}
 		}
 		return(false);

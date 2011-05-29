@@ -18,6 +18,7 @@ require_once(PROJECT_PATH."/library/view/render/LayoutHidden.php");
 require_once(PROJECT_PATH."/library/view/render/LayoutTextInput.php");
 //require_once(PROJECT_PATH."/library/view/render/LayoutDate.php");
 require_once(PROJECT_PATH."/library/view/render/LayoutPassword.php");
+require_once(PROJECT_PATH."/library/view/render/LayoutButton.php");
 
 $fname = "Usuarios()";
 
@@ -31,10 +32,12 @@ $array_stylesheet = array(
 	"styles/component.visual.floor.css",
 	"styles/component.interactive.menu.css",
 	"styles/component.interactive.window.css",
+	"styles/component.interactive.list.css",
 	"styles/component.interactive.form.input.css",
 	"styles/component.interactive.form.textarea.css",
 	"styles/component.interactive.form.checkbox.css",
 	"styles/component.interactive.form.radiobutton.css",
+	"styles/component.interactive.form.button.css",
 	"styles/external/jquery.jscrollpane.css"
 );
 
@@ -64,13 +67,15 @@ function createList(){
 		);
 	}
 	$list_content = new LayoutList(LOC_USUARIO_LIST_TITLE);
-	$list_content->addColumn("login", "15%", LOC_USUARIO_COL_LOGIN);
+	$list_content->addColumn("login", "17%", LOC_USUARIO_COL_LOGIN);
 	$list_content->addColumn("name", "35%", LOC_USUARIO_COL_NAME);
 	$list_content->addColumn("email", "45%", LOC_USUARIO_COL_EMAIL);
-	$list_content->addColumn("delete", "5%", "&nbsp;");
+	$list_content->addColumn("delete", "3%", "&nbsp;");
 	$list_content->setList($list_item);
-	
-	return($list_content->getLayout());
+
+	$button = new LayoutButton( LOC_USUARIO_BTN_INSERT, "./usuarios.php?action=new" );
+
+	return($list_content->getLayout().$button->getLayout());
 }
 
 /**
@@ -100,6 +105,10 @@ function createForm( $object = "" ){
 	$input_content = new LayoutTextInput( FIELD_LARGE, true, LOC_USUARIO_LBL_EMAIL, "email", $object->getEMail() ); $fields_content .= $input_content->getLayout();
 	$input_content = new LayoutPassword( FIELD_MEDIUM, false, LOC_USUARIO_LBL_PWD_NEW, "senha_nova", $object->getSenhaNova() ); $fields_content .= $input_content->getLayout();
 	$input_content = new LayoutPassword( FIELD_MEDIUM, false, LOC_USUARIO_LBL_PWD_CONF, "senha_confirma", $object->getSenhaConfirma() ); $fields_content .= $input_content->getLayout();
+
+	$input_content = new LayoutButton( LOC_GENERIC_BTN_CONFIRM, "#" ); $fields_content .= $input_content->getLayout();
+	$input_content = new LayoutButton( LOC_GENERIC_BTN_CANCEL, "#" ); $fields_content .= $input_content->getLayout();
+
 	
 //	$form_content = new LayoutForm($form_title, "usuarios.php", $form_type, $fields_content);
 

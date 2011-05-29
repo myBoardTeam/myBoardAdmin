@@ -1,0 +1,23 @@
+/**
+ * Conjunto de estilos que compoem um Botão.
+ *
+ * @author Rafael Fernandes <rafael.porpeta@gmail.com>
+ * @version %I%, %G%
+ */
+
+/* Estilo do Botão*/
+.button {
+    margin-top: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+    clear: both;
+    padding: 0px;
+    border: solid transparent;
+    border-width: 15px 20px 20px 15px;
+    border-image: url("drawable/form/button/normal.png") 15 20 20 15;
+	font-family: Verdana, Arial, Sans-serif;
+    font-size: 0.9em;
+    color: #FFFFFF;
+    text-align: center;
+    /* border: dashed 2px #FF0000; */ /* <DEBUG> */
+}

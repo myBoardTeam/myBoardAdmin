@@ -41,7 +41,9 @@ class LayoutList extends AbstractLayout {
 		
 		$this->layout_string  = "";
 		$this->layout_string .= "<!-- <LIST> -->\n";
-		$this->layout_string .= "<div class=\"listTitle\">".$this->getTitle()."</div>\n";
+		$this->layout_string .= "<table class=\"listTable\" width=\"100%\">\n";
+		$this->layout_string .= "  <tr><td class=\"listTitle\">".$this->getTitle()."</td></tr>\n";
+		$this->layout_string .= "</table>\n";
 		$this->layout_string .= "<table class=\"listTable\" width=\"100%\">\n";
 		$this->layout_string .= "  <tr>\n";
 		foreach ( $this->getColumns() as $column )
@@ -49,7 +51,7 @@ class LayoutList extends AbstractLayout {
 		$this->layout_string .= "  </tr>\n";
 		
 		foreach ( $this->getList() as $list ) {
-			$this->layout_string .= "  <tr>\n";
+			$this->layout_string .= "  <tr class=\"listContentRow\">\n";
 			foreach ( $this->getColumns() as $column ) {
 				$list_text = isset( $list[$column["name"]]["link"] ) ? "<a href=\"".$list[$column["name"]]["link"]."\">".$list[$column["name"]]["value"]."</a>" : $list[$column["name"]]["value"] ;
 				$this->layout_string .= "    <td class=\"listContent width=\"".$column["size"]."\">".$list_text."</td>\n";
@@ -88,12 +90,12 @@ class LayoutList extends AbstractLayout {
 			foreach ( $p_value as $list_item )
 				foreach ( $this->getColumns() as $column )
 					if ( !isset( $list_item[$column["name"]]["value"] )) {
-						$this->addMessage($this->get_class(), $fname, MB_ERROR, MB_HIDDEN, LOC_EMSG_LAYOUT_LIST);
+						$this->addMessage(get_class($this), $fname, MB_ERROR, MB_HIDDEN, LOC_EMSG_LAYOUT_LIST);
 						return(false);
 					}
 			$this->list = $p_value;
 		} else {
-			$this->addMessage($this->get_class(), $fname, MB_ERROR, MB_HIDDEN, LOC_EMSG_LAYOUT_LIST);
+			$this->addMessage(get_class($this), $fname, MB_ERROR, MB_HIDDEN, LOC_EMSG_LAYOUT_LIST);
 			return(false);
 		}
 	}

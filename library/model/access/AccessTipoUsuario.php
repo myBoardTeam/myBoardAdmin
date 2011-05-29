@@ -26,12 +26,12 @@ class AccessTipoUsuario extends AbstractAccess {
 	public function find( $id ) {
 		$fname = "find()";
 		
-		if ( !$id > 0 ) { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_TP_USUARIO_01); $this->setResult(false); }
+		if ( !$id > 0 ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_TP_USUARIO_NN_01); $this->setResult(false); }
 
 		$query = "select * from tipo_usuario where id_tipo = '".$id."' limit 1";
 		
 		if (!$result = $this->database_connection->runQuery( $query, DB_SELECT )) {
-			$this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_TP_USUARIO_FND_01);
+			$this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_TP_USUARIO_FND_01);
 			$this->setResult($result);
 		} else {
 			$tipo_usuario = new TipoUsuario();
@@ -54,7 +54,7 @@ class AccessTipoUsuario extends AbstractAccess {
 		$query = "select * from tipo_usuario";
 		
 		if (!$result = $this->database_connection->runQuery( $query, DB_SELECT )) {
-			$this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_TP_USUARIO_LST_01);
+			$this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_TP_USUARIO_LST_01);
 			$this->setResult($result);
 		} else {
 			foreach ( $result as $array_item ) {

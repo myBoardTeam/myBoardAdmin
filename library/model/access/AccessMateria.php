@@ -26,7 +26,7 @@ class AccessMateria extends AbstractAccess {
 	public function insertItem( $item ) {
 		$fname = "insertItem()";
 		
-		if ( $item->getDescricao() == "") { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_MATERIA_01); $this->setResult(false); }
+		if ( $item->getDescricao() == "") { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_MATERIA_NN_02); $this->setResult(false); }
 			
 		$query  = "insert into materia(";
 		$query .= " descricao";
@@ -35,7 +35,7 @@ class AccessMateria extends AbstractAccess {
 		$query .= " )";
 			
 		if (!$result = $this->database_connection->runQuery( $query, DB_INSERT ))
-			$this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_MATERIA_INS_01);
+			$this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_MATERIA_INS_01);
 
 		$this->setResult($result);
 	}
@@ -51,14 +51,15 @@ class AccessMateria extends AbstractAccess {
 	public function updateItem( $item ) {
 		$fname = "updateItem()";
 		
-		if ( $item->getDescricao() == "") { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_MATERIA_01); $this->setResult(false); }
+		if ( !$item->getIDMateria() > 0 ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_MATERIA_NN_01); $this->setResult(false); }
+		if ( $item->getDescricao() == "") { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_MATERIA_NN_02); $this->setResult(false); }
 			
 		$query  = "update materia set";
 		$query .= " descricao = '".addslashes($item->getDescricao())."'";
 		$query .= " where id_materia = ".$item->getIDMateria();
 			
 		if (!$result = $this->database_connection->runQuery( $query, DB_UPDATE ))
-			$this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_MATERIA_UPD_01);
+			$this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_MATERIA_UPD_01);
 			
 		$this->setResult($result);		
 	}
@@ -74,15 +75,15 @@ class AccessMateria extends AbstractAccess {
 	public function deleteItem( $id ) {
 		$fname = "deleteItem()";
 
-		if ( !$id > 0 ) { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_MATERIA_01); $this->setResult(false); }
+		if ( !$id > 0 ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_MATERIA_NN_01); $this->setResult(false); }
 		
 		$query = "delete from usuario_materia where id_materia = ".$id;
 		if (!$result = $this->database_connection->runQuery( $query, DB_UPDATE ))
-			$this->addMessage($this->get_class(), $fname, MB_WARNING, MB_SHOW, LOC_EMSG_ACC_MATERIA_DEL_01);
+			$this->addMessage(get_class($this), $fname, MB_WARNING, MB_SHOW, LOC_EMSG_ACC_MATERIA_DEL_01);
 
 		$query = "delete from materia where id_materia = ".$id;
 		if (!$result = $this->database_connection->runQuery( $query, DB_UPDATE ))
-			$this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_MATERIA_DEL_02);
+			$this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_MATERIA_DEL_02);
 			
 		$this->setResult($result);
 	}
@@ -98,12 +99,12 @@ class AccessMateria extends AbstractAccess {
 	public function find( $id ) {
 		$fname = "find()";
 		
-		if ( !$id > 0 ) { $this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACCESS_MATERIA_01); $this->setResult(false); }
+		if ( !$id > 0 ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_MATERIA_NN_01); $this->setResult(false); }
 
 		$query = "select * from materia where id_materia = ".$id." limit 1";
 		
 		if (!$result = $this->database_connection->runQuery( $query, DB_SELECT )) {
-			$this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_MATERIA_FND_01);
+			$this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_MATERIA_FND_01);
 			$this->setResult($result);
 		} else {
 			$materia = new Materia();
@@ -126,7 +127,7 @@ class AccessMateria extends AbstractAccess {
 		$query = "select * from materia";
 		
 		if (!$result = $this->database_connection->runQuery( $query, DB_SELECT )) {
-			$this->addMessage($this->get_class(), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_MATERIA_LST_01);
+			$this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_MATERIA_LST_01);
 			$this->setResult($result);
 		} else {
 			foreach ( $result as $array_item ) {

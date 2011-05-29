@@ -57,7 +57,7 @@ abstract class AbstractLayout extends AbstractMessageLog {
 		$fname = "getLayout()";
 		
 		if ( $this->layout_string == "" )
-			$this->addMessage($this->get_class(), $fname, MB_ERROR, MB_HIDDEN, LOC_EMSG_LAYOUT_EMPTY);
+			$this->addMessage(get_class($this), $fname, MB_ERROR, MB_HIDDEN, LOC_EMSG_LAYOUT_EMPTY);
 			
 		return $this->layout_string;
 	}

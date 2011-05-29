@@ -1,0 +1,72 @@
+/**
+ * Conjunto de estilos que compoem uma Listagem e seus componentes diretos.
+ *
+ * @author Rafael Fernandes <rafael.porpeta@gmail.com>
+ * @version %I%, %G%
+ */
+
+/* Tamanho e posicionamento do Titulo da Listagem */
+.listTitle {
+    position: relative;
+    width: 100%;
+    padding: 6px;
+    text-align: center;
+    font-family: Verdana, Arial, Sans-serif;
+    font-size: 1em;
+    font-weight: 900;
+    font-variant: small-caps;
+    color: #000000;
+    filter: alpha(opacity=60); /* ie */
+    opacity: .6; /* mozilla */
+    background: #FFFFFF;
+    /* border: dashed 2px #FF0000; */ /* <DEBUG> */
+}
+
+/* Tamanho e posicionamento da Tabela da Listagem */
+.listTable {
+    position: relative;
+    width: 100%;
+    spacing: 3px;
+    /* border: dashed 2px #FF0000; */ /* <DEBUG> */
+}
+
+/* Tamanho e posicionamento dos Labels da Listagem */
+.listLabel {
+    position: relative;
+    padding: 6px;
+    text-align: center;
+    font-family: Verdana, Arial, Sans-serif;
+    font-size: 0.9em;
+    font-weight: 900;
+    color: #000000;
+    filter: alpha(opacity=40); /* ie */
+    opacity: .4; /* mozilla */
+    background: #FFFFFF;
+    /* border: dashed 2px #FF0000; */ /* <DEBUG> */
+}
+
+/* Tamanho e posicionamento do Conteudo da Listagem */
+.listContent, .listContent a {
+    position: relative;
+    padding: 4px;
+    font-family: Verdana, Arial, Sans-serif;
+    font-size: 0.9em;
+    color: #FFFFFF;
+    filter: alpha(opacity=60); /* ie */
+    opacity: .6; /* mozilla */
+    background: #000000;
+    /* border: dashed 2px #FF0000; */ /* <DEBUG> */
+}
+
+/* Estilo para os Links */
+.listContent a {
+    font-weight: 900;
+    text-decoration: none;
+}
+
+/* Efeito de Hover na Linha */
+.listContentRow:hover {
+    filter: alpha(opacity=60); /* ie */
+    opacity: .6; /* mozilla */
+    background-color: #99FF55;
+}

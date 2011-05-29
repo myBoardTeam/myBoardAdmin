@@ -65,7 +65,7 @@
 /* Tamanho e posicionamento do Conteúdo da Janela */
 .windowContent {
     height: 100%;
-	padding: 0px;
+	padding-bottom: 85px;
     font-family: Verdana, Arial, Sans-serif;
     font-size: 0.9em;
     color: #FFFFFF;
