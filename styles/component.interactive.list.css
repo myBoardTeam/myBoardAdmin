@@ -27,6 +27,7 @@
     position: relative;
     width: 100%;
     spacing: 3px;
+    margin-bottom: 15px;
     /* border: dashed 2px #FF0000; */ /* <DEBUG> */
 }
 

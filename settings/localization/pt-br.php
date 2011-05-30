@@ -8,6 +8,7 @@ define( "LOC_EMSG_LAYOUT_EMPTY", "Conteúdo Vazio" );
 define( "LOC_EMSG_LAYOUT_LIST", "Estrutura de Vetor Inválida" );
 
 // Termos Genéricos
+define( "LOC_GENERIC_LIST_EMPTY", "Não Existem Registros no Sistema" );
 define( "LOC_GENERIC_BTN_CONFIRM", "Confirmar" );
 define( "LOC_GENERIC_BTN_CANCEL", "Cancelar" );
 
@@ -25,7 +26,7 @@ define( "LOC_EMSG_DB_MYSQL_RS_EMPTY", "Não existem resultados relacionados." );
 define( "LOC_DASHBOARD_TITLE", "Menu Principal" );
 
 // Cadastro de Usuários
-define( "LOC_USUARIO_WINDOW_TITLE", "Cadastro de Usuários" );
+define( "LOC_USUARIO_WINDOW_TITLE", "Janela de Cadastro" );
 define( "LOC_USUARIO_FORM_INSERT_TITLE", "Criar Novo Usuário" );
 define( "LOC_USUARIO_FORM_UPDATE_TITLE", "Alterar Usuário" );
 define( "LOC_USUARIO_LBL_USER_TYPE", "Tipo de Usuário" );

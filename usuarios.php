@@ -13,7 +13,7 @@ require_once(PROJECT_PATH."/library/view/render/LayoutPage.php");
 require_once(PROJECT_PATH."/library/view/render/LayoutMenu.php");
 require_once(PROJECT_PATH."/library/view/render/LayoutWindow.php");
 require_once(PROJECT_PATH."/library/view/render/LayoutList.php");
-//require_once(PROJECT_PATH."/library/view/render/LayoutForm.php");
+require_once(PROJECT_PATH."/library/view/render/LayoutForm.php");
 require_once(PROJECT_PATH."/library/view/render/LayoutHidden.php");
 require_once(PROJECT_PATH."/library/view/render/LayoutTextInput.php");
 //require_once(PROJECT_PATH."/library/view/render/LayoutDate.php");
@@ -56,6 +56,8 @@ $array_script = array(
  * @version %I%, %G%
  */
 function createList(){
+	$button = new LayoutButton( LOC_USUARIO_BTN_INSERT, "./usuarios.php?action=new" );
+
 	$access = new AccessUsuario();
 	$access->listAll();
 	foreach ($access->getResult() as $item) {
@@ -66,16 +68,14 @@ function createList(){
 			"delete" => array( "value" => "X", "link" => "./usuarios.php?action=delete&id=".$item->getIDUsuario() )
 		);
 	}
-	$list_content = new LayoutList(LOC_USUARIO_LIST_TITLE);
+	$list_content = new LayoutList();
 	$list_content->addColumn("login", "17%", LOC_USUARIO_COL_LOGIN);
 	$list_content->addColumn("name", "35%", LOC_USUARIO_COL_NAME);
 	$list_content->addColumn("email", "45%", LOC_USUARIO_COL_EMAIL);
 	$list_content->addColumn("delete", "3%", "&nbsp;");
 	$list_content->setList($list_item);
 
-	$button = new LayoutButton( LOC_USUARIO_BTN_INSERT, "./usuarios.php?action=new" );
-
-	return($list_content->getLayout().$button->getLayout());
+	return($button->getLayout().$list_content->getLayout());
 }
 
 /**
@@ -84,13 +84,12 @@ function createList(){
  * @author myBoardTeam <myboardteam@gmail.com>
  * @version %I%, %G%
  */
-function createForm( $object = "" ){
+function createForm( $name, $object = "" ){
 	if ($object != "") {
 		$form_type = FORM_UPDATE;
-		$form_title = LOC_USUARIO_FORM_UPDATE_TITLE;
+		
 	} else {
 		$form_type = FORM_INSERT;
-		$form_title = LOC_USUARIO_FORM_INSERT_TITLE;
 		$object = new Usuario();
 	}	
 
@@ -105,17 +104,12 @@ function createForm( $object = "" ){
 	$input_content = new LayoutTextInput( FIELD_LARGE, true, LOC_USUARIO_LBL_EMAIL, "email", $object->getEMail() ); $fields_content .= $input_content->getLayout();
 	$input_content = new LayoutPassword( FIELD_MEDIUM, false, LOC_USUARIO_LBL_PWD_NEW, "senha_nova", $object->getSenhaNova() ); $fields_content .= $input_content->getLayout();
 	$input_content = new LayoutPassword( FIELD_MEDIUM, false, LOC_USUARIO_LBL_PWD_CONF, "senha_confirma", $object->getSenhaConfirma() ); $fields_content .= $input_content->getLayout();
-
-	$input_content = new LayoutButton( LOC_GENERIC_BTN_CONFIRM, "#" ); $fields_content .= $input_content->getLayout();
-	$input_content = new LayoutButton( LOC_GENERIC_BTN_CANCEL, "#" ); $fields_content .= $input_content->getLayout();
-
 	
-//	$form_content = new LayoutForm($form_title, "usuarios.php", $form_type, $fields_content);
+	$form_content = new LayoutForm("./usuarios.php", $name, $form_type, "javascript:submit".$name."()", "./usuarios.php", $fields_content );
 
 //	$permissao_content = createListPermissao();
 
-//	return($form_content->getContent());
-	return("<!-- <FORM> -->\n".$fields_content."<!-- </FORM> -->\n");
+	return($form_content->getLayout());
 }
 ?>
 <?php
@@ -132,9 +126,13 @@ switch ($action) {
 
 		$access_usuario = new AccessUsuario();
 		$access_usuario->insertItem($obj_usuario);
-		$obj_usuario->setIDUsuario($access_usuario->getResult());
 
-		$html_content = createForm($obj_usuario);
+		$obj_usuario->setIDUsuario($access_usuario->getResult());
+		$obj_usuario->setSenhaNova("");
+		$obj_usuario->setSenhaConfirma("");
+
+		$subtitle = LOC_USUARIO_FORM_UPDATE_TITLE;
+		$html_content = createForm("FormUsuario", $obj_usuario);
 		break;
 	case "update":
 		$obj_usuario = new Usuario();
@@ -149,32 +147,40 @@ switch ($action) {
 
 		$access_usuario = new AccessUsuario();
 		$access_usuario->updateItem($obj_usuario);
+
+		$obj_usuario->setSenhaNova("");
+		$obj_usuario->setSenhaConfirma("");
 		
-		$html_content = createForm($obj_usuario);
+		$subtitle = LOC_USUARIO_FORM_UPDATE_TITLE;
+		$html_content = createForm("FormUsuario", $obj_usuario);
 		break;
 	case "delete":
 		$access_usuario = new AccessUsuario();
 		$access_usuario->deleteItem(isset( $_GET["id"] ) ? $_GET["id"] : "");
 		
+		$subtitle = LOC_USUARIO_LIST_TITLE;
 		$html_content = createList();
 		break;
 	case "view":
 		$access_usuario = new AccessUsuario();
 		$access_usuario->find(isset( $_GET["id"] ) ? $_GET["id"] : "");
 		
-		$html_content = createForm($access_usuario->getResult());
+		$subtitle = LOC_USUARIO_FORM_UPDATE_TITLE;
+		$html_content = createForm("FormUsuario", $access_usuario->getResult());
 		break;
 	case "new":
-		$html_content = createForm();
+		$subtitle = LOC_USUARIO_FORM_INSERT_TITLE;
+		$html_content = createForm("FormUsuario");
 		break;
 	case "list":
 	default:
+		$subtitle = LOC_USUARIO_LIST_TITLE;
 		$html_content = createList();
 }
 
-$window_content = new LayoutWindow($title, $html_content);
+$window_content = new LayoutWindow($title.(($subtitle != "")? " - ".$subtitle : ""), $html_content);
 $menu_content = new LayoutMenu();
-$page_content = new LayoutPage($title, $array_script, $array_stylesheet, $menu_content->getLayout().$window_content->getLayout());
+$page_content = new LayoutPage($title.(($subtitle != "")? " - ".$subtitle : ""), $array_script, $array_stylesheet, $menu_content->getLayout().$window_content->getLayout());
 
 $page_content->getHeaders();
 echo($page_content->getLayout());

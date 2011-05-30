@@ -24,7 +24,7 @@ class LayoutList extends AbstractLayout {
 	 * @author myBoardTeam <myboardteam@gmail.com>
 	 * @version %I%, %G%
 	 */
-	function __construct( $p_title ) {
+	function __construct( $p_title = "" ) {
 		$fname = "constructObject()";
 		
 		$this->setTitle($p_title);
@@ -41,25 +41,33 @@ class LayoutList extends AbstractLayout {
 		
 		$this->layout_string  = "";
 		$this->layout_string .= "<!-- <LIST> -->\n";
-		$this->layout_string .= "<table class=\"listTable\" width=\"100%\">\n";
-		$this->layout_string .= "  <tr><td class=\"listTitle\">".$this->getTitle()."</td></tr>\n";
-		$this->layout_string .= "</table>\n";
-		$this->layout_string .= "<table class=\"listTable\" width=\"100%\">\n";
-		$this->layout_string .= "  <tr>\n";
-		foreach ( $this->getColumns() as $column )
-			$this->layout_string .= "    <td class=\"listLabel\" width=\"".$column["size"]."\">".$column["value"]."</td>\n";
-		$this->layout_string .= "  </tr>\n";
-		
-		foreach ( $this->getList() as $list ) {
-			$this->layout_string .= "  <tr class=\"listContentRow\">\n";
-			foreach ( $this->getColumns() as $column ) {
-				$list_text = isset( $list[$column["name"]]["link"] ) ? "<a href=\"".$list[$column["name"]]["link"]."\">".$list[$column["name"]]["value"]."</a>" : $list[$column["name"]]["value"] ;
-				$this->layout_string .= "    <td class=\"listContent width=\"".$column["size"]."\">".$list_text."</td>\n";
+		if ( count( $this->getList() ) > 0 ) {
+			if ( $this->getTitle() != "" ) {
+				$this->layout_string .= "<table class=\"listTable\" width=\"100%\">\n";
+				$this->layout_string .= "  <tr><td class=\"listTitle\">".$this->getTitle()."</td></tr>\n";
+				$this->layout_string .= "</table>\n";
 			}
+			$this->layout_string .= "<table class=\"listTable\" width=\"100%\">\n";
+			$this->layout_string .= "  <tr>\n";
+			foreach ( $this->getColumns() as $column )
+				$this->layout_string .= "    <td class=\"listLabel\" width=\"".$column["size"]."\">".$column["value"]."</td>\n";
 			$this->layout_string .= "  </tr>\n";
+			
+			foreach ( $this->getList() as $list ) {
+				$this->layout_string .= "  <tr class=\"listContentRow\">\n";
+				foreach ( $this->getColumns() as $column ) {
+					$list_text = isset( $list[$column["name"]]["link"] ) ? "<a href=\"".$list[$column["name"]]["link"]."\">".$list[$column["name"]]["value"]."</a>" : $list[$column["name"]]["value"] ;
+					$this->layout_string .= "    <td class=\"listContent width=\"".$column["size"]."\">".$list_text."</td>\n";
+				}
+				$this->layout_string .= "  </tr>\n";
+			}
+			
+			$this->layout_string .= "</table>";
+		} else {
+			$this->layout_string .= "<table class=\"listTable\" width=\"100%\">\n";
+			$this->layout_string .= "  <tr><td class=\"listTitle\">".LOC_GENERIC_LIST_EMPTY."</td></tr>\n";
+			$this->layout_string .= "</table>\n";
 		}
-		
-		$this->layout_string .= "</table>";
 		$this->layout_string .= "<!-- </LIST> -->\n";
 	}
 
