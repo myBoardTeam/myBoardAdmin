@@ -25,6 +25,13 @@ define( "LOC_EMSG_DB_MYSQL_RS_EMPTY", "Não existem resultados relacionados." );
 // Dashboard
 define( "LOC_DASHBOARD_TITLE", "Menu Principal" );
 
+// Controle de Login
+define( "LOC_LOGIN_TITLE", "Login do Sistema myBoard" );
+define( "LOC_LOGIN_LBL_LOGIN", "Login" );
+define( "LOC_LOGIN_LBL_PWD", "Senha" );
+define( "LOC_LOGIN_LBL_HELLO", "Olá" );
+define( "LOC_LOGIN_LBL_LOGOUT", "Sair do Sistema" );
+
 // Cadastro de Usuários
 define( "LOC_USUARIO_WINDOW_TITLE", "Janela de Cadastro" );
 define( "LOC_USUARIO_FORM_INSERT_TITLE", "Criar Novo Usuário" );
@@ -57,6 +64,25 @@ define( "LOC_EMSG_ACC_USUARIO_DEL_03", "Impossível Excluir Permissões do Usuário
 define( "LOC_EMSG_ACC_USUARIO_DEL_04", "Impossível Excluir Usuário. Consulte o Administrador do Sistema." );
 define( "LOC_EMSG_ACC_USUARIO_FND_01", "Impossível Selecionar Usuário. Consulte o Administrador do Sistema." );
 define( "LOC_EMSG_ACC_USUARIO_LST_01", "Impossível Listar Usuários. Consulte o Administrador do Sistema." );
+define( "LOC_EMSG_ACC_USUARIO_CHK_01", "Login e Senha Inválido" );
+
+// Cadastro de Permissões
+define( "LOC_PERMISSAO_LIST_TITLE", "Permissões do Usuário" );
+define( "LOC_PERMISSAO_COL_DESCRICAO", "Descrição" );
+define( "LOC_PERMISSAO_COL_ACCESS", "Acessar" );
+define( "LOC_PERMISSAO_COL_UPDATE", "Alterar" );
+define( "LOC_PERMISSAO_COL_INSERT", "Incluir" );
+define( "LOC_PERMISSAO_COL_DELETE", "Excluir" );
+
+// Mensagens de Acesso a Tabela Usuário
+define( "LOC_EMSG_ACC_PERMISSAO_NN_01", "Permissão deve ser informada." );
+define( "LOC_EMSG_ACC_PERMISSAO_NN_02", "Tipo de Permissão deve ser informada." );
+define( "LOC_EMSG_ACC_PERMISSAO_NN_03", "Nome da Permissão deve ser informado." );
+define( "LOC_EMSG_ACC_PERMISSAO_NN_04", "Descrição da Permissão deve ser informada." );
+define( "LOC_EMSG_ACC_PERMISSAO_INS_01", "Impossível Inserir Permissão. Consulte o Administrador do Sistema." );
+define( "LOC_EMSG_ACC_PERMISSAO_UPD_01", "Impossível Alterar Permissão. Consulte o Administrador do Sistema." );
+define( "LOC_EMSG_ACC_PERMISSAO_DEL_01", "Impossível Excluir Permissão. Consulte o Administrador do Sistema." );
+define( "LOC_EMSG_ACC_PERMISSAO_LST_01", "Impossível Listar Permissões. Consulte o Administrador do Sistema." );
 
 // Cadastro de Matérias
 define( "LOC_MATERIA_WINDOW_TITLE", "Cadastro de Matérias" );

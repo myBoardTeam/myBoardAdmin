@@ -29,11 +29,11 @@ class AccessUsuario extends AbstractAccess {
 	public function insertItem( $item ) {
 		$fname = "insertItem()";
 		
-		if ( $item->getIDTipoUsuario() == "" ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_NN_02); $this->setResult(false); }
-		if ( $item->getNome() == "" ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_NN_03); $this->setResult(false); }
-		if ( $item->getUsuario() == "" ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_NN_04); $this->setResult(false); }
-		if ( $item->getSenhaNova() != $item->getSenhaConfirma() ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_NN_05); $this->setResult(false); }
-		if ( $item->getEMail() == "" ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_NN_06); $this->setResult(false); }
+		if ( $item->getIDTipoUsuario() == "" ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_NN_02); $this->setResult(false); break;}
+		if ( $item->getNome() == "" ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_NN_03); $this->setResult(false); break;}
+		if ( $item->getUsuario() == "" ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_NN_04); $this->setResult(false); break;}
+		if ( $item->getSenhaNova() != $item->getSenhaConfirma() ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_NN_05); $this->setResult(false); break;}
+		if ( $item->getEMail() == "" ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_NN_06); $this->setResult(false); break;}
 			
 		$query  = "insert into usuario(";
 		$query .= " id_tipo_usuario,";
@@ -51,8 +51,10 @@ class AccessUsuario extends AbstractAccess {
 		$query .= " '".addslashes($item->getEMail())."'";
 		$query .= " )";
 			
-		if (!$result = $this->database_connection->runQuery( $query, DB_INSERT ))
+		if (!$result = $this->database_connection->runQuery( $query, DB_INSERT )) {
 			$this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_INS_01);
+			 break;
+		}
 
 		$this->setResult($result);
 	}
@@ -68,12 +70,12 @@ class AccessUsuario extends AbstractAccess {
 	public function updateItem( $item ) {
 		$fname = "updateItem()";
 		
-		if ( !$item->getIDUsuario() > 0 ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_NN_01); $this->setResult(false); }
-		if ( $item->getIDTipoUsuario() == "" ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_NN_02); $this->setResult(false); }
-		if ( $item->getNome() == "" ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_NN_03); $this->setResult(false); }
-		if ( $item->getUsuario() == "" ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_NN_04); $this->setResult(false); }
-		if ( $item->getSenhaNova() != $item->getSenhaConfirma() ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_NN_05); $this->setResult(false); }
-		if ( $item->getEMail() == "" ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_NN_06); $this->setResult(false); }
+		if ( !$item->getIDUsuario() > 0 ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_NN_01); $this->setResult(false); break; }
+		if ( $item->getIDTipoUsuario() == "" ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_NN_02); $this->setResult(false); break; }
+		if ( $item->getNome() == "" ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_NN_03); $this->setResult(false); break; }
+		if ( $item->getUsuario() == "" ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_NN_04); $this->setResult(false); break; }
+		if ( $item->getSenhaNova() != $item->getSenhaConfirma() ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_NN_05); $this->setResult(false); break; }
+		if ( $item->getEMail() == "" ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_NN_06); $this->setResult(false); break; }
 			
 		$query  = "update usuario set";
 		$query .= " id_tipo_usuario = '".$item->getIDTipoUsuario()."',";
@@ -84,8 +86,10 @@ class AccessUsuario extends AbstractAccess {
 		$query .= " email = '".addslashes($item->getEMail())."'";
 		$query .= " where id_usuario = ".$item->getIDUsuario();
 			
-		if (!$result = $this->database_connection->runQuery( $query, DB_UPDATE ))
+		if (!$result = $this->database_connection->runQuery( $query, DB_UPDATE )) {
 			$this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_UPD_01);
+			break;
+		}
 			
 		$this->setResult($result);		
 	}
@@ -101,23 +105,31 @@ class AccessUsuario extends AbstractAccess {
 	public function deleteItem( $id ) {
 		$fname = "deleteItem()";
 
-		if ( !$id > 0 ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_NN_01); $this->setResult(false); }
+		if ( !$id > 0 ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_NN_01); $this->setResult(false); break; }
 		
 		$query = "delete from usuario_perfil where id_usuario = ".$id;
-		if (!$result = $this->database_connection->runQuery( $query, DB_UPDATE ))
+		if (!$result = $this->database_connection->runQuery( $query, DB_UPDATE )) {
 			$this->addMessage(get_class($this), $fname, MB_WARNING, MB_SHOW, LOC_EMSG_ACC_USUARIO_DEL_01);
-			
+			break;
+		}
+
 		$query = "delete from usuario_materia where id_usuario = ".$id;
-		if (!$result = $this->database_connection->runQuery( $query, DB_UPDATE ))
+		if (!$result = $this->database_connection->runQuery( $query, DB_UPDATE )) {
 			$this->addMessage(get_class($this), $fname, MB_WARNING, MB_SHOW, LOC_EMSG_ACC_USUARIO_DEL_02);
+			break;
+		}
 			
 		$query = "delete from usuario_permissao where id_usuario = ".$id;
-		if (!$result = $this->database_connection->runQuery( $query, DB_UPDATE ))
+		if (!$result = $this->database_connection->runQuery( $query, DB_UPDATE )) {
 			$this->addMessage(get_class($this), $fname, MB_WARNING, MB_SHOW, LOC_EMSG_ACC_USUARIO_DEL_03);
+			break;
+		}
 			
 		$query = "delete from usuario where id_usuario = ".$id;
-		if (!$result = $this->database_connection->runQuery( $query, DB_UPDATE ))
+		if (!$result = $this->database_connection->runQuery( $query, DB_UPDATE )) {
 			$this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_DEL_04);
+			break;
+		}
 			
 		$this->setResult($result);
 	}
@@ -133,13 +145,14 @@ class AccessUsuario extends AbstractAccess {
 	public function find( $id ) {
 		$fname = "find()";
 		
-		if ( !$id > 0 ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_NN_01); $this->setResult(false); }
+		if ( !$id > 0 ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_NN_01); $this->setResult(false); break; }
 
 		$query = "select * from usuario where id_usuario = ".$id." limit 1";
 		
 		if (!$result = $this->database_connection->runQuery( $query, DB_SELECT )) {
 			$this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_FND_01);
-			$this->setResult($result);
+			$this->setResult(false);
+			break;
 		} else {
 			$usuario = new Usuario();
 			$usuario->setIDUsuario($result[0]["id_usuario"]);
@@ -166,7 +179,8 @@ class AccessUsuario extends AbstractAccess {
 		
 		if (!$result = $this->database_connection->runQuery( $query, DB_SELECT )) {
 			$this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_LST_01);
-			$this->setResult($result);
+			$this->setResult(false);
+			break;
 		} else {
 			foreach ( $result as $array_item ) {
 				$usuario = new Usuario();
@@ -181,6 +195,38 @@ class AccessUsuario extends AbstractAccess {
 			}
 			$this->setResult($usuario_list);
 		}
+	}
+	
+	/**
+	 * Verifica se o Login e a Senha estão corretos
+	 * 
+	 * @author myBoardTeam <myboardteam@gmail.com>
+	 * @version %I%, %G%
+	 */
+	public function checkLogin( $login, $password ) {
+		$fname = "checkLogin()";
+		
+		$query = "select * from usuario where usuario = '".$login."' and senha = '".$password."'";
+		
+		if (!$result = $this->database_connection->runQuery( $query, DB_SELECT )) {
+			$this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_LST_01);
+			return(false);
+		} else if ( is_array($result[0]) ) {
+			$usuario = new Usuario();
+			$usuario->setIDUsuario($result[0]["id_usuario"]);
+			$usuario->setIDTipoUsuario($result[0]["id_tipo_usuario"]);
+			$usuario->setNome($result[0]["nome"]);
+			$usuario->setUsuario($result[0]["usuario"]);
+			$usuario->setDataNascimento($result[0]["dt_nascimento"]);
+			$usuario->setEMail($result[0]["email"]);
+			
+			$this->setResult($usuario);
+			return(true);
+		} else {
+			$this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_USUARIO_CHK_01);
+			return(false);
+		}
+		
 	}
 }
 ?>

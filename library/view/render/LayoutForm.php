@@ -59,12 +59,12 @@ class LayoutForm extends AbstractLayout {
 		$this->layout_string .= "<script type=\"text/javascript\" language=\"JavaScript\">\n";
 		$this->layout_string .= "  function submit".$this->getName()."() { document.".$this->getName().".submit(); }\n";
 		$this->layout_string .= "</script>\n";
-		$this->layout_string .= "<form name=\"".$this->getName()."\" action=\"usuarios.php\" method=\"post\" enctype=\"multipart/form-data\">\n";
+		$this->layout_string .= "<form name=\"".$this->getName()."\" action=\"".$this->getAction()."\" method=\"post\" enctype=\"multipart/form-data\">\n";
 		$this->layout_string .= "  <table width=\"100%\">\n";
 		$this->layout_string .= "    <tr>\n";
 		$this->layout_string .= "      <td colspan=2>\n";
 		
-		$input_content = new LayoutHidden( "action", ($this->getFormType() == FORM_UPDATE ) ? "update" : "insert" );
+		$input_content = new LayoutHidden( "action", ($this->getFormType() == FORM_UPDATE ) ? "update" : ($this->getFormType() == FORM_LOGIN ) ? "login" : "insert" );
 
 		$this->layout_string .= $input_content->getLayout();
 		$this->layout_string .= $this->getContent();

@@ -1,0 +1,32 @@
+/**
+ * Conjunto de estilos que compoem o Popup.
+ *
+ * @author Rafael Fernandes <rafael.porpeta@gmail.com>
+ * @version %I%, %G%
+ */
+
+/* Tamanho e especificaçoes do Overlay */
+.popupOverlay {
+    position: fixed;
+    top: 0px;    
+    bottom: 0px;    
+    width: 100%;
+    z-index: 50;
+    background: #000000;
+    filter: alpha(opacity=60); /* ie */
+    opacity: .6; /* mozilla */
+    /* border: dashed 2px #FF0000; */ /* <DEBUG> */
+}
+
+/* Tamanho e posicionamento do Popup */
+.popupBackground {
+    position: fixed;
+    left: 30%;
+    right: 30%;
+    top: 30%;
+    z-index: 51;
+    font-family: Verdana, Arial, Sans-serif;
+    font-size: 0.9em;
+    color: #FFFFFF;
+    /* border: dashed 2px #FF0000; */ /* <DEBUG> */
+}

@@ -37,10 +37,18 @@ class LayoutMenu extends AbstractLayout {
 	 * @version %I%, %G%
 	 */	
 	public function setLayout() {
+		global $_COOKIE;
+		
 		$fname = "setLayout()";
 
 		$this->layout_string  = "";
 		$this->layout_string .= "    <!-- <DASHBOARD> -->\n";
+		if ( isset($_COOKIE["logged"]) && isset($_COOKIE["user_name"]) ) {
+			$this->layout_string .= "    <div class=\"topOverlay\"></div>\n";
+			$this->layout_string .= "    <div class=\"topMenu\">\n";
+			$this->layout_string .= "      ".LOC_LOGIN_LBL_HELLO.", <b>".$_COOKIE["user_name"]."</b> [<a href=\"index.php?action=logout\">".LOC_LOGIN_LBL_LOGOUT."</a>]\n";
+			$this->layout_string .= "    </div>\n";
+		}
 		$this->layout_string .= "    <div class=\"menu\">\n";
 		$this->layout_string .= "      <script type=\"text/javascript\" charset=\"utf-8\">\n";
 		$this->layout_string .= "        \$(function() {\n";

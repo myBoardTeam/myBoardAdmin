@@ -8,6 +8,7 @@ require_once(PROJECT_PATH."/settings/localization/".PROJECT_LANGUAGE.".php");
 
 require_once(PROJECT_PATH."/library/model/database/Usuario.php");
 require_once(PROJECT_PATH."/library/model/access/AccessUsuario.php");
+require_once(PROJECT_PATH."/library/model/access/AccessPermissao.php");
 
 require_once(PROJECT_PATH."/library/view/render/LayoutPage.php");
 require_once(PROJECT_PATH."/library/view/render/LayoutMenu.php");
@@ -30,6 +31,7 @@ $array_stylesheet = array(
 	"styles/general.css",
 	"styles/component.visual.sky.css",
 	"styles/component.visual.floor.css",
+	"styles/component.interactive.topmenu.css",
 	"styles/component.interactive.menu.css",
 	"styles/component.interactive.window.css",
 	"styles/component.interactive.list.css",
@@ -87,7 +89,6 @@ function createList(){
 function createForm( $name, $object = "" ){
 	if ($object != "") {
 		$form_type = FORM_UPDATE;
-		
 	} else {
 		$form_type = FORM_INSERT;
 		$object = new Usuario();
@@ -105,83 +106,108 @@ function createForm( $name, $object = "" ){
 	$input_content = new LayoutPassword( FIELD_MEDIUM, false, LOC_USUARIO_LBL_PWD_NEW, "senha_nova", $object->getSenhaNova() ); $fields_content .= $input_content->getLayout();
 	$input_content = new LayoutPassword( FIELD_MEDIUM, false, LOC_USUARIO_LBL_PWD_CONF, "senha_confirma", $object->getSenhaConfirma() ); $fields_content .= $input_content->getLayout();
 	
+	if ( $form_type == FORM_UPDATE ) {
+		$access = new AccessPermissao();
+		$access->listAll();
+		foreach ($access->getResult() as $item) {
+			$list_item[] = array(
+				"descricao" => array( "value" => $item->getDescricao() ),
+				"access" => array( "value" => "&nbsp;" ),
+				"update" => array( "value" => "&nbsp;" ),
+				"insert" => array( "value" => "&nbsp;" ),
+				"delete" => array( "value" => "&nbsp;" )
+			);
+		}
+		$list_content = new LayoutList(LOC_PERMISSAO_LIST_TITLE);
+		$list_content->addColumn("descricao", "60%", LOC_PERMISSAO_COL_DESCRICAO);
+		$list_content->addColumn("access", "10%", LOC_PERMISSAO_COL_ACCESS);
+		$list_content->addColumn("update", "10%", LOC_PERMISSAO_COL_UPDATE);
+		$list_content->addColumn("insert", "10%", LOC_PERMISSAO_COL_INSERT);
+		$list_content->addColumn("delete", "10%", LOC_PERMISSAO_COL_DELETE);
+		$list_content->setList($list_item);
+	
+		$fields_content .= $list_content->getLayout();
+	}
+	
 	$form_content = new LayoutForm("./usuarios.php", $name, $form_type, "javascript:submit".$name."()", "./usuarios.php", $fields_content );
-
-//	$permissao_content = createListPermissao();
 
 	return($form_content->getLayout());
 }
 ?>
 <?php
-switch ($action) {
-	case "insert":
-		$obj_usuario = new Usuario();
-		$obj_usuario->setNome(isset( $_POST["nome"] ) ? $_POST["nome"] : "");
-		$obj_usuario->setDataNascimento(isset( $_POST["dt_nascimento"] ) ? $_POST["dt_nascimento"] : "");
-		$obj_usuario->setIDTipoUsuario(isset( $_POST["id_tipo_usuario"] ) ? $_POST["id_tipo_usuario"] : "");
-		$obj_usuario->setEMail(isset( $_POST["email"] ) ? $_POST["email"] : "");
-		$obj_usuario->setUsuario(isset( $_POST["usuario"] ) ? $_POST["usuario"] : "");
-		$obj_usuario->setSenhaNova(isset( $_POST["senha_nova"] ) ? $_POST["senha_nova"] : "");
-		$obj_usuario->setSenhaConfirma(isset( $_POST["senha_confirma"] ) ? $_POST["senha_confirma"] : "");
+if ( isset($_COOKIE["logged"] ) ) {
+	switch ($action) {
+		case "insert":
+			$obj_usuario = new Usuario();
+			$obj_usuario->setNome(isset( $_POST["nome"] ) ? $_POST["nome"] : "");
+			$obj_usuario->setDataNascimento(isset( $_POST["dt_nascimento"] ) ? $_POST["dt_nascimento"] : "");
+			$obj_usuario->setIDTipoUsuario(isset( $_POST["id_tipo_usuario"] ) ? $_POST["id_tipo_usuario"] : "");
+			$obj_usuario->setEMail(isset( $_POST["email"] ) ? $_POST["email"] : "");
+			$obj_usuario->setUsuario(isset( $_POST["usuario"] ) ? $_POST["usuario"] : "");
+			$obj_usuario->setSenhaNova(isset( $_POST["senha_nova"] ) ? $_POST["senha_nova"] : "");
+			$obj_usuario->setSenhaConfirma(isset( $_POST["senha_confirma"] ) ? $_POST["senha_confirma"] : "");
+	
+			$access_usuario = new AccessUsuario();
+			$access_usuario->insertItem($obj_usuario);
+	
+			$obj_usuario->setIDUsuario($access_usuario->getResult());
+			$obj_usuario->setSenhaNova("");
+			$obj_usuario->setSenhaConfirma("");
+	
+			$subtitle = LOC_USUARIO_FORM_UPDATE_TITLE;
+			$html_content = createForm("FormUsuario", $obj_usuario);
+			break;
+		case "update":
+			$obj_usuario = new Usuario();
+			$obj_usuario->setIDUsuario(isset( $_POST["id_usuario"] ) ? $_POST["id_usuario"] : "");
+			$obj_usuario->setNome(isset( $_POST["nome"] ) ? $_POST["nome"] : "");
+			$obj_usuario->setDataNascimento(isset( $_POST["dt_nascimento"] ) ? $_POST["dt_nascimento"] : "");
+			$obj_usuario->setIDTipoUsuario(isset( $_POST["id_tipo_usuario"] ) ? $_POST["id_tipo_usuario"] : "");
+			$obj_usuario->setEMail(isset( $_POST["email"] ) ? $_POST["email"] : "");
+			$obj_usuario->setUsuario(isset( $_POST["usuario"] ) ? $_POST["usuario"] : "");
+			$obj_usuario->setSenhaNova(isset( $_POST["senha_nova"] ) ? $_POST["senha_nova"] : "");
+			$obj_usuario->setSenhaConfirma(isset( $_POST["senha_confirma"] ) ? $_POST["senha_confirma"] : "");
+	
+			$access_usuario = new AccessUsuario();
+			$access_usuario->updateItem($obj_usuario);
+	
+			$obj_usuario->setSenhaNova("");
+			$obj_usuario->setSenhaConfirma("");
+			
+			$subtitle = LOC_USUARIO_FORM_UPDATE_TITLE;
+			$html_content = createForm("FormUsuario", $obj_usuario);
+			break;
+		case "delete":
+			$access_usuario = new AccessUsuario();
+			$access_usuario->deleteItem(isset( $_GET["id"] ) ? $_GET["id"] : "");
+			
+			$subtitle = LOC_USUARIO_LIST_TITLE;
+			$html_content = createList();
+			break;
+		case "view":
+			$access_usuario = new AccessUsuario();
+			$access_usuario->find(isset( $_GET["id"] ) ? $_GET["id"] : "");
+			
+			$subtitle = LOC_USUARIO_FORM_UPDATE_TITLE;
+			$html_content = createForm("FormUsuario", $access_usuario->getResult());
+			break;
+		case "new":
+			$subtitle = LOC_USUARIO_FORM_INSERT_TITLE;
+			$html_content = createForm("FormUsuario");
+			break;
+		case "list":
+		default:
+			$subtitle = LOC_USUARIO_LIST_TITLE;
+			$html_content = createList();
+	}
 
-		$access_usuario = new AccessUsuario();
-		$access_usuario->insertItem($obj_usuario);
-
-		$obj_usuario->setIDUsuario($access_usuario->getResult());
-		$obj_usuario->setSenhaNova("");
-		$obj_usuario->setSenhaConfirma("");
-
-		$subtitle = LOC_USUARIO_FORM_UPDATE_TITLE;
-		$html_content = createForm("FormUsuario", $obj_usuario);
-		break;
-	case "update":
-		$obj_usuario = new Usuario();
-		$obj_usuario->setIDUsuario(isset( $_POST["id_usuario"] ) ? $_POST["id_usuario"] : "");
-		$obj_usuario->setNome(isset( $_POST["nome"] ) ? $_POST["nome"] : "");
-		$obj_usuario->setDataNascimento(isset( $_POST["dt_nascimento"] ) ? $_POST["dt_nascimento"] : "");
-		$obj_usuario->setIDTipoUsuario(isset( $_POST["id_tipo_usuario"] ) ? $_POST["id_tipo_usuario"] : "");
-		$obj_usuario->setEMail(isset( $_POST["email"] ) ? $_POST["email"] : "");
-		$obj_usuario->setUsuario(isset( $_POST["usuario"] ) ? $_POST["usuario"] : "");
-		$obj_usuario->setSenhaNova(isset( $_POST["senha_nova"] ) ? $_POST["senha_nova"] : "");
-		$obj_usuario->setSenhaConfirma(isset( $_POST["senha_confirma"] ) ? $_POST["senha_confirma"] : "");
-
-		$access_usuario = new AccessUsuario();
-		$access_usuario->updateItem($obj_usuario);
-
-		$obj_usuario->setSenhaNova("");
-		$obj_usuario->setSenhaConfirma("");
-		
-		$subtitle = LOC_USUARIO_FORM_UPDATE_TITLE;
-		$html_content = createForm("FormUsuario", $obj_usuario);
-		break;
-	case "delete":
-		$access_usuario = new AccessUsuario();
-		$access_usuario->deleteItem(isset( $_GET["id"] ) ? $_GET["id"] : "");
-		
-		$subtitle = LOC_USUARIO_LIST_TITLE;
-		$html_content = createList();
-		break;
-	case "view":
-		$access_usuario = new AccessUsuario();
-		$access_usuario->find(isset( $_GET["id"] ) ? $_GET["id"] : "");
-		
-		$subtitle = LOC_USUARIO_FORM_UPDATE_TITLE;
-		$html_content = createForm("FormUsuario", $access_usuario->getResult());
-		break;
-	case "new":
-		$subtitle = LOC_USUARIO_FORM_INSERT_TITLE;
-		$html_content = createForm("FormUsuario");
-		break;
-	case "list":
-	default:
-		$subtitle = LOC_USUARIO_LIST_TITLE;
-		$html_content = createList();
+	$window_content = new LayoutWindow($title.(($subtitle != "")? " - ".$subtitle : ""), $html_content);
+	$menu_content = new LayoutMenu();
+	$page_content = new LayoutPage($title.(($subtitle != "")? " - ".$subtitle : ""), $array_script, $array_stylesheet, $menu_content->getLayout().$window_content->getLayout());
+	
+	$page_content->getHeaders();
+	echo($page_content->getLayout());
+} else {
+	header("Location: ".PROJECT_ADDRESS."/index.php");
 }
-
-$window_content = new LayoutWindow($title.(($subtitle != "")? " - ".$subtitle : ""), $html_content);
-$menu_content = new LayoutMenu();
-$page_content = new LayoutPage($title.(($subtitle != "")? " - ".$subtitle : ""), $array_script, $array_stylesheet, $menu_content->getLayout().$window_content->getLayout());
-
-$page_content->getHeaders();
-echo($page_content->getLayout());
 ?>

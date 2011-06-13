@@ -43,7 +43,7 @@ class LayoutList extends AbstractLayout {
 		$this->layout_string .= "<!-- <LIST> -->\n";
 		if ( count( $this->getList() ) > 0 ) {
 			if ( $this->getTitle() != "" ) {
-				$this->layout_string .= "<table class=\"listTable\" width=\"100%\">\n";
+				$this->layout_string .= "<table class=\"listTableTitle\" width=\"100%\">\n";
 				$this->layout_string .= "  <tr><td class=\"listTitle\">".$this->getTitle()."</td></tr>\n";
 				$this->layout_string .= "</table>\n";
 			}

@@ -33,6 +33,7 @@ define( "MB_HIDDEN", "2");
 // Tipos de Formulario
 define( "FORM_INSERT", "1");
 define( "FORM_UPDATE", "2");
+define( "FORM_LOGIN", "3");
 
 // Tamanho de Campos do Formulario
 define( "FIELD_SMALL", "20%");
