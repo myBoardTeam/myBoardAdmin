@@ -12,23 +12,23 @@ require_once(PROJECT_PATH."/library/view/render/AbstractLayout.php");
  * @version %I%, %G%
  */
 class LayoutButton extends AbstractLayout {
+	protected $disabled;
 	protected $label;
 		
 	/**
 	 * Construtor da Classe
 	 * 
-	 * @param $p_size Tamanho do Campo
-	 * @param $p_required Informa se o campo é obrigatório (true, false)
+	 * @param $p_disabled Informa está ou não desabilitado (true, false)
 	 * @param $p_label Label do Campo
-	 * @param $p_name Nome do Campo
 	 * @param $p_value Valor do Campo
 	 *
 	 * @author myBoardTeam <myboardteam@gmail.com>
 	 * @version %I%, %G%
 	 */
-	function __construct( $p_label, $p_value = "" ) {
+	function __construct( $p_disabled, $p_label, $p_value = "" ) {
 		$fname = "constructObject()";
 
+		$this->setDisabled($p_disabled);
 		$this->setLabel($p_label);
 
 		parent::__construct($p_value);
@@ -51,8 +51,25 @@ class LayoutButton extends AbstractLayout {
 		$this->layout_string .= "    \$('.button').hover( function(){ \$(this).borderImage( 'url(\"drawable/form/button/selected.png\") 15 20 20 15 stretch stretch' ); }, function(){ \$(this).borderImage( 'url(\"drawable/form/button/normal.png\") 15 20 20 15 stretch stretch' ); } );\n";
 		$this->layout_string .= "  });\n";
 		$this->layout_string .= "</script>\n";
-		$this->layout_string .= "<a href=\"".$this->getContent()."\"><div class=\"button\"><b>".$this->getLabel()."</b></div></a>\n";
+		
+		if ( $this->getDisabled() )
+			$this->layout_string .= "<div class=\"button\"><b>".$this->getLabel()."</b></div>\n";
+		else
+			$this->layout_string .= "<a href=\"".$this->getContent()."\"><div class=\"button\"><b>".$this->getLabel()."</b></div></a>\n";
+			
 		$this->layout_string .= "<!-- </BUTTON> -->\n";
+	}
+
+	/**
+	 * Define se o Botão estará habilitado ou desabilitado
+	 * 
+	 * @param $p_value Status
+	 *
+	 * @author myBoardTeam <myboardteam@gmail.com>
+	 * @version %I%, %G%
+	 */	
+	public function setDisabled( $p_value ) {
+		$this->disabled = $p_value;
 	}
 
 	/**
@@ -65,6 +82,16 @@ class LayoutButton extends AbstractLayout {
 	 */	
 	public function setLabel( $p_value ) {
 		$this->label = $p_value;
+	}
+
+	/**
+	 * Verifica se o Botão estará habilitado ou desabilitado
+	 * 
+	 * @author myBoardTeam <myboardteam@gmail.com>
+	 * @version %I%, %G%
+	 */	
+	public function getDisabled() {
+		return($this->disabled);
 	}
 
 	/**

@@ -14,6 +14,7 @@ require_once(PROJECT_PATH."/library/view/render/LayoutButton.php");
  * @version %I%, %G%
  */
 class LayoutForm extends AbstractLayout {
+	private $disabled;
 	private $action;
 	private $name;
 	private $type;
@@ -33,9 +34,10 @@ class LayoutForm extends AbstractLayout {
 	 * @author myBoardTeam <myboardteam@gmail.com>
 	 * @version %I%, %G%
 	 */
-	function __construct( $p_action, $p_name, $p_type, $p_confirm, $p_cancel, $p_fields = "" ) {
+	function __construct( $p_disabled, $p_action, $p_name, $p_type, $p_confirm, $p_cancel, $p_fields = "" ) {
 		$fname = "constructObject()";
 
+		$this->setDisabled($p_disabled);
 		$this->setAction($p_action);
 		$this->setName($p_name);
 		$this->setFormType($p_type);
@@ -73,13 +75,13 @@ class LayoutForm extends AbstractLayout {
 		$this->layout_string .= "    <tr>\n";
 		$this->layout_string .= "      <td width=\"50%\">\n";
 		
-		$input_content = new LayoutButton( LOC_GENERIC_BTN_CONFIRM, $this->getConfirmAction() );
+		$input_content = new LayoutButton( $this->getDisabled(), LOC_GENERIC_BTN_CONFIRM, $this->getConfirmAction() );
 
 		$this->layout_string .= $input_content->getLayout();
 		$this->layout_string .= "      </td>\n";
 		$this->layout_string .= "      <td width=\"50%\">\n";
 		
-		$input_content = new LayoutButton( LOC_GENERIC_BTN_CANCEL, $this->getCancelAction() );
+		$input_content = new LayoutButton( false, LOC_GENERIC_BTN_CANCEL, $this->getCancelAction() );
 		
 		$this->layout_string .= $input_content->getLayout();
 		$this->layout_string .= "      </td>\n";
@@ -87,6 +89,18 @@ class LayoutForm extends AbstractLayout {
 		$this->layout_string .= "  </table>\n";
 		$this->layout_string .= "</form>\n";
 		$this->layout_string .= "<!-- </FORM> -->";
+	}
+
+	/**
+	 * Define se o Formulário estará habilitado ou desabilitado
+	 * 
+	 * @param $p_value Status
+	 *
+	 * @author myBoardTeam <myboardteam@gmail.com>
+	 * @version %I%, %G%
+	 */	
+	public function setDisabled( $p_value ) {
+		$this->disabled = $p_value;
 	}
 
 	/**
@@ -147,6 +161,16 @@ class LayoutForm extends AbstractLayout {
 	 */	
 	public function setCancelAction( $p_value ) {
 		$this->cancel = $p_value;
+	}
+
+	/**
+	 * Verifica se o Formulário estará habilitado ou desabilitado
+	 * 
+	 * @author myBoardTeam <myboardteam@gmail.com>
+	 * @version %I%, %G%
+	 */	
+	public function getDisabled() {
+		return($this->disabled);
 	}
 
 	/**

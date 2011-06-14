@@ -58,16 +58,17 @@ $array_script = array(
  * @version %I%, %G%
  */
 function createList(){
-	$button = new LayoutButton( LOC_USUARIO_BTN_INSERT, "./usuarios.php?action=new" );
+	if ( $_COOKIE["permission_usuarios"] >= PERM_LEVEL_KEEP_INSERT )
+		$button = new LayoutButton( LOC_USUARIO_BTN_INSERT, "./usuarios.php?action=new" );
 
 	$access = new AccessUsuario();
 	$access->listAll();
 	foreach ($access->getResult() as $item) {
 		$list_item[] = array(
-			"login" => array( "value" => $item->getUsuario(), "link" => "./usuarios.php?action=view&id=".$item->getIDUsuario() ),
+			"login" => ( $_COOKIE["permission_usuarios"] >= PERM_LEVEL_KEEP_VIEW ) ? array( "value" => $item->getUsuario(), "link" => "./usuarios.php?action=view&id=".$item->getIDUsuario() ) : array( "value" => $item->getUsuario() ),
 			"name" => array( "value" => $item->getNome() ),
 			"email" => array( "value" => $item->getEMail() ),
-			"delete" => array( "value" => "X", "link" => "./usuarios.php?action=delete&id=".$item->getIDUsuario() )
+			"delete" => ( $_COOKIE["permission_usuarios"] >= PERM_LEVEL_KEEP_DELETE ) ? array( "value" => "X", "link" => "./usuarios.php?action=delete&id=".$item->getIDUsuario() ) : array( "value" => "&nbsp;" )
 		);
 	}
 	$list_content = new LayoutList();
@@ -77,7 +78,10 @@ function createList(){
 	$list_content->addColumn("delete", "3%", "&nbsp;");
 	$list_content->setList($list_item);
 
-	return($button->getLayout().$list_content->getLayout());
+	if ( $_COOKIE["permission_usuarios"] >= PERM_LEVEL_KEEP_INSERT )
+		return($button->getLayout().$list_content->getLayout());
+	else
+		return($list_content->getLayout());
 }
 
 /**
@@ -89,22 +93,24 @@ function createList(){
 function createForm( $name, $object = "" ){
 	if ($object != "") {
 		$form_type = FORM_UPDATE;
+		$form_perm_level = ( $_COOKIE["permission_usuarios"] >= PERM_LEVEL_KEEP_UPDATE ) ? false : true;
 	} else {
 		$form_type = FORM_INSERT;
+		$form_perm_level = ( $_COOKIE["permission_usuarios"] >= PERM_LEVEL_KEEP_INSERT ) ? false : true;
 		$object = new Usuario();
 	}	
 
 	$fields_content = "";
 	
 	$input_content = new LayoutHidden( "id_usuario", $object->getIDUsuario() ); $fields_content .= $input_content->getLayout();
-	$input_content = new LayoutTextInput( FIELD_MEDIUM, true, LOC_USUARIO_LBL_NAME, "nome", $object->getNome() ); $fields_content .= $input_content->getLayout();
-	$input_content = new LayoutTextInput( FIELD_MEDIUM, true, LOC_USUARIO_LBL_LOGIN, "usuario", $object->getUsuario() ); $fields_content .= $input_content->getLayout();
-//	$input_content = new LayoutDate( FIELD_MEDIUM, false, LOC_USUARIO_LBL_BIRTH, "dt_nascimento", $object->getDataNascimento() ); $fields_content .= $input_content->getLayout();
-	$input_content = new LayoutTextInput( FIELD_MEDIUM, false, LOC_USUARIO_LBL_BIRTH, "dt_nascimento", $object->getDataNascimento() ); $fields_content .= $input_content->getLayout();
-	$input_content = new LayoutTextInput( FIELD_MEDIUM, true, LOC_USUARIO_LBL_USER_TYPE, "id_tipo_usuario", $object->getIDTipoUsuario() ); $fields_content .= $input_content->getLayout();
-	$input_content = new LayoutTextInput( FIELD_LARGE, true, LOC_USUARIO_LBL_EMAIL, "email", $object->getEMail() ); $fields_content .= $input_content->getLayout();
-	$input_content = new LayoutPassword( FIELD_MEDIUM, false, LOC_USUARIO_LBL_PWD_NEW, "senha_nova", $object->getSenhaNova() ); $fields_content .= $input_content->getLayout();
-	$input_content = new LayoutPassword( FIELD_MEDIUM, false, LOC_USUARIO_LBL_PWD_CONF, "senha_confirma", $object->getSenhaConfirma() ); $fields_content .= $input_content->getLayout();
+	$input_content = new LayoutTextInput( FIELD_MEDIUM, true, ( $_COOKIE["permission_usuarios"] >= PERM_LEVEL_KEEP_UPDATE ) ? false : true, LOC_USUARIO_LBL_NAME, "nome", $object->getNome() ); $fields_content .= $input_content->getLayout();
+	$input_content = new LayoutTextInput( FIELD_MEDIUM, true, ( $_COOKIE["permission_usuarios"] >= PERM_LEVEL_KEEP_UPDATE ) ? false : true, LOC_USUARIO_LBL_LOGIN, "usuario", $object->getUsuario() ); $fields_content .= $input_content->getLayout();
+//	$input_content = new LayoutDate( FIELD_MEDIUM, false, ( $_COOKIE["permission_usuarios"] >= PERM_LEVEL_KEEP_UPDATE ) ? false : true, LOC_USUARIO_LBL_BIRTH, "dt_nascimento", $object->getDataNascimento() ); $fields_content .= $input_content->getLayout();
+	$input_content = new LayoutTextInput( FIELD_MEDIUM, false, ( $_COOKIE["permission_usuarios"] >= PERM_LEVEL_KEEP_UPDATE ) ? false : true, LOC_USUARIO_LBL_BIRTH, "dt_nascimento", $object->getDataNascimento() ); $fields_content .= $input_content->getLayout();
+	$input_content = new LayoutTextInput( FIELD_MEDIUM, true, ( $_COOKIE["permission_usuarios"] >= PERM_LEVEL_KEEP_UPDATE ) ? false : true, LOC_USUARIO_LBL_USER_TYPE, "id_tipo_usuario", $object->getIDTipoUsuario() ); $fields_content .= $input_content->getLayout();
+	$input_content = new LayoutTextInput( FIELD_LARGE, true, ( $_COOKIE["permission_usuarios"] >= PERM_LEVEL_KEEP_UPDATE ) ? false : true, LOC_USUARIO_LBL_EMAIL, "email", $object->getEMail() ); $fields_content .= $input_content->getLayout();
+	$input_content = new LayoutPassword( FIELD_MEDIUM, false, ( $_COOKIE["permission_usuarios"] >= PERM_LEVEL_KEEP_UPDATE ) ? false : true, LOC_USUARIO_LBL_PWD_NEW, "senha_nova", $object->getSenhaNova() ); $fields_content .= $input_content->getLayout();
+	$input_content = new LayoutPassword( FIELD_MEDIUM, false, ( $_COOKIE["permission_usuarios"] >= PERM_LEVEL_KEEP_UPDATE ) ? false : true, LOC_USUARIO_LBL_PWD_CONF, "senha_confirma", $object->getSenhaConfirma() ); $fields_content .= $input_content->getLayout();
 	
 	if ( $form_type == FORM_UPDATE ) {
 		$access = new AccessPermissao();
@@ -129,76 +135,88 @@ function createForm( $name, $object = "" ){
 		$fields_content .= $list_content->getLayout();
 	}
 	
-	$form_content = new LayoutForm("./usuarios.php", $name, $form_type, "javascript:submit".$name."()", "./usuarios.php", $fields_content );
+	$form_content = new LayoutForm( $form_perm_level, "./usuarios.php", $name, $form_type, "javascript:submit".$name."()", "./usuarios.php", $fields_content );
 
 	return($form_content->getLayout());
 }
 ?>
 <?php
-if ( isset($_COOKIE["logged"] ) ) {
+if ( isset($_COOKIE["logged"] ) && $_COOKIE["permission_admin"] >= PERM_LEVEL_ACCESS ) {
 	switch ($action) {
 		case "insert":
-			$obj_usuario = new Usuario();
-			$obj_usuario->setNome(isset( $_POST["nome"] ) ? $_POST["nome"] : "");
-			$obj_usuario->setDataNascimento(isset( $_POST["dt_nascimento"] ) ? $_POST["dt_nascimento"] : "");
-			$obj_usuario->setIDTipoUsuario(isset( $_POST["id_tipo_usuario"] ) ? $_POST["id_tipo_usuario"] : "");
-			$obj_usuario->setEMail(isset( $_POST["email"] ) ? $_POST["email"] : "");
-			$obj_usuario->setUsuario(isset( $_POST["usuario"] ) ? $_POST["usuario"] : "");
-			$obj_usuario->setSenhaNova(isset( $_POST["senha_nova"] ) ? $_POST["senha_nova"] : "");
-			$obj_usuario->setSenhaConfirma(isset( $_POST["senha_confirma"] ) ? $_POST["senha_confirma"] : "");
-	
-			$access_usuario = new AccessUsuario();
-			$access_usuario->insertItem($obj_usuario);
-	
-			$obj_usuario->setIDUsuario($access_usuario->getResult());
-			$obj_usuario->setSenhaNova("");
-			$obj_usuario->setSenhaConfirma("");
-	
-			$subtitle = LOC_USUARIO_FORM_UPDATE_TITLE;
-			$html_content = createForm("FormUsuario", $obj_usuario);
+			if ( $_COOKIE["permission_usuarios"] >= PERM_LEVEL_KEEP_INSERT ) {
+				$obj_usuario = new Usuario();
+				$obj_usuario->setNome(isset( $_POST["nome"] ) ? $_POST["nome"] : "");
+				$obj_usuario->setDataNascimento(isset( $_POST["dt_nascimento"] ) ? $_POST["dt_nascimento"] : "");
+				$obj_usuario->setIDTipoUsuario(isset( $_POST["id_tipo_usuario"] ) ? $_POST["id_tipo_usuario"] : "");
+				$obj_usuario->setEMail(isset( $_POST["email"] ) ? $_POST["email"] : "");
+				$obj_usuario->setUsuario(isset( $_POST["usuario"] ) ? $_POST["usuario"] : "");
+				$obj_usuario->setSenhaNova(isset( $_POST["senha_nova"] ) ? $_POST["senha_nova"] : "");
+				$obj_usuario->setSenhaConfirma(isset( $_POST["senha_confirma"] ) ? $_POST["senha_confirma"] : "");
+		
+				$access_usuario = new AccessUsuario();
+				$access_usuario->insertItem($obj_usuario);
+		
+				$obj_usuario->setIDUsuario($access_usuario->getResult());
+				$obj_usuario->setSenhaNova("");
+				$obj_usuario->setSenhaConfirma("");
+		
+				$subtitle = LOC_USUARIO_FORM_UPDATE_TITLE;
+				$html_content = createForm("FormUsuario", $obj_usuario);
+			} else { header("Location: ".PROJECT_ADDRESS."/usuarios.php"); exit; }
 			break;
 		case "update":
-			$obj_usuario = new Usuario();
-			$obj_usuario->setIDUsuario(isset( $_POST["id_usuario"] ) ? $_POST["id_usuario"] : "");
-			$obj_usuario->setNome(isset( $_POST["nome"] ) ? $_POST["nome"] : "");
-			$obj_usuario->setDataNascimento(isset( $_POST["dt_nascimento"] ) ? $_POST["dt_nascimento"] : "");
-			$obj_usuario->setIDTipoUsuario(isset( $_POST["id_tipo_usuario"] ) ? $_POST["id_tipo_usuario"] : "");
-			$obj_usuario->setEMail(isset( $_POST["email"] ) ? $_POST["email"] : "");
-			$obj_usuario->setUsuario(isset( $_POST["usuario"] ) ? $_POST["usuario"] : "");
-			$obj_usuario->setSenhaNova(isset( $_POST["senha_nova"] ) ? $_POST["senha_nova"] : "");
-			$obj_usuario->setSenhaConfirma(isset( $_POST["senha_confirma"] ) ? $_POST["senha_confirma"] : "");
-	
-			$access_usuario = new AccessUsuario();
-			$access_usuario->updateItem($obj_usuario);
-	
-			$obj_usuario->setSenhaNova("");
-			$obj_usuario->setSenhaConfirma("");
-			
-			$subtitle = LOC_USUARIO_FORM_UPDATE_TITLE;
-			$html_content = createForm("FormUsuario", $obj_usuario);
+			if ( $_COOKIE["permission_usuarios"] >= PERM_LEVEL_KEEP_UPDATE ) {
+				$obj_usuario = new Usuario();
+				$obj_usuario->setIDUsuario(isset( $_POST["id_usuario"] ) ? $_POST["id_usuario"] : "");
+				$obj_usuario->setNome(isset( $_POST["nome"] ) ? $_POST["nome"] : "");
+				$obj_usuario->setDataNascimento(isset( $_POST["dt_nascimento"] ) ? $_POST["dt_nascimento"] : "");
+				$obj_usuario->setIDTipoUsuario(isset( $_POST["id_tipo_usuario"] ) ? $_POST["id_tipo_usuario"] : "");
+				$obj_usuario->setEMail(isset( $_POST["email"] ) ? $_POST["email"] : "");
+				$obj_usuario->setUsuario(isset( $_POST["usuario"] ) ? $_POST["usuario"] : "");
+				$obj_usuario->setSenhaNova(isset( $_POST["senha_nova"] ) ? $_POST["senha_nova"] : "");
+				$obj_usuario->setSenhaConfirma(isset( $_POST["senha_confirma"] ) ? $_POST["senha_confirma"] : "");
+		
+				$access_usuario = new AccessUsuario();
+				$access_usuario->updateItem($obj_usuario);
+		
+				$obj_usuario->setSenhaNova("");
+				$obj_usuario->setSenhaConfirma("");
+				
+				$subtitle = LOC_USUARIO_FORM_UPDATE_TITLE;
+				$html_content = createForm("FormUsuario", $obj_usuario);
+			} else { header("Location: ".PROJECT_ADDRESS."/usuarios.php"); exit; }
 			break;
 		case "delete":
-			$access_usuario = new AccessUsuario();
-			$access_usuario->deleteItem(isset( $_GET["id"] ) ? $_GET["id"] : "");
-			
-			$subtitle = LOC_USUARIO_LIST_TITLE;
-			$html_content = createList();
+			if ( $_COOKIE["permission_usuarios"] >= PERM_LEVEL_KEEP_DELETE ) {
+				$access_usuario = new AccessUsuario();
+				$access_usuario->deleteItem(isset( $_GET["id"] ) ? $_GET["id"] : "");
+				
+				$subtitle = LOC_USUARIO_LIST_TITLE;
+				$html_content = createList();
+			} else { header("Location: ".PROJECT_ADDRESS."/usuarios.php"); exit; }
 			break;
 		case "view":
-			$access_usuario = new AccessUsuario();
-			$access_usuario->find(isset( $_GET["id"] ) ? $_GET["id"] : "");
-			
-			$subtitle = LOC_USUARIO_FORM_UPDATE_TITLE;
-			$html_content = createForm("FormUsuario", $access_usuario->getResult());
+			if ( $_COOKIE["permission_usuarios"] >= PERM_LEVEL_KEEP_VIEW ) {
+				$access_usuario = new AccessUsuario();
+				$access_usuario->find(isset( $_GET["id"] ) ? $_GET["id"] : "");
+				
+				$subtitle = LOC_USUARIO_FORM_UPDATE_TITLE;
+				$html_content = createForm("FormUsuario", $access_usuario->getResult());
+			} else { header("Location: ".PROJECT_ADDRESS."/usuarios.php"); exit; }
 			break;
 		case "new":
-			$subtitle = LOC_USUARIO_FORM_INSERT_TITLE;
-			$html_content = createForm("FormUsuario");
+			if ( $_COOKIE["permission_usuarios"] >= PERM_LEVEL_KEEP_INSERT ) {
+				$subtitle = LOC_USUARIO_FORM_INSERT_TITLE;
+				$html_content = createForm("FormUsuario");
+			} else { header("Location: ".PROJECT_ADDRESS."/usuarios.php"); exit; }
 			break;
 		case "list":
 		default:
-			$subtitle = LOC_USUARIO_LIST_TITLE;
-			$html_content = createList();
+			if ( $_COOKIE["permission_usuarios"] >= PERM_LEVEL_KEEP_LIST ) {
+				$subtitle = LOC_USUARIO_LIST_TITLE;
+				$html_content = createList();
+			} else { header("Location: ".PROJECT_ADDRESS."/usuarios.php"); exit; }
 	}
 
 	$window_content = new LayoutWindow($title.(($subtitle != "")? " - ".$subtitle : ""), $html_content);

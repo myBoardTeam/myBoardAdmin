@@ -52,16 +52,24 @@ class LayoutMenu extends AbstractLayout {
 		$this->layout_string .= "    <div class=\"menu\">\n";
 		$this->layout_string .= "      <script type=\"text/javascript\" charset=\"utf-8\">\n";
 		$this->layout_string .= "        \$(function() {\n";
-		$this->layout_string .= "          \$('#tileUsuarios').hover( function(){ \$(this).attr( \"src\", \"drawable/tiles/usuarios/pressed.png\"); }, function(){ \$(this).attr( \"src\", \"drawable/tiles/usuarios/normal.png\"); } );\n";
-		$this->layout_string .= "          \$('#tilePerfis').hover( function(){ \$(this).attr( \"src\", \"drawable/tiles/perfis/pressed.png\"); }, function(){ \$(this).attr( \"src\", \"drawable/tiles/perfis/normal.png\"); } );\n";
-		$this->layout_string .= "          \$('#tileMaterias').hover( function(){ \$(this).attr( \"src\", \"drawable/tiles/materias/pressed.png\"); }, function(){ \$(this).attr( \"src\", \"drawable/tiles/materias/normal.png\"); } );\n";
-		$this->layout_string .= "          \$('#tileFerramentas').hover( function(){ \$(this).attr( \"src\", \"drawable/tiles/ferramentas/pressed.png\"); }, function(){ \$(this).attr( \"src\", \"drawable/tiles/ferramentas/normal.png\"); } );\n";
+		if ( $_COOKIE["permission_usuarios"] >= PERM_LEVEL_ACCESS )
+			$this->layout_string .= "          \$('#tileUsuarios').hover( function(){ \$(this).attr( \"src\", \"drawable/tiles/usuarios/pressed.png\"); }, function(){ \$(this).attr( \"src\", \"drawable/tiles/usuarios/normal.png\"); } );\n";
+		if ( $_COOKIE["permission_perfis"] >= PERM_LEVEL_ACCESS )
+			$this->layout_string .= "          \$('#tilePerfis').hover( function(){ \$(this).attr( \"src\", \"drawable/tiles/perfis/pressed.png\"); }, function(){ \$(this).attr( \"src\", \"drawable/tiles/perfis/normal.png\"); } );\n";
+		if ( $_COOKIE["permission_materias"] >= PERM_LEVEL_ACCESS )
+			$this->layout_string .= "          \$('#tileMaterias').hover( function(){ \$(this).attr( \"src\", \"drawable/tiles/materias/pressed.png\"); }, function(){ \$(this).attr( \"src\", \"drawable/tiles/materias/normal.png\"); } );\n";
+		if ( $_COOKIE["permission_ferramentas"] >= PERM_LEVEL_ACCESS )
+			$this->layout_string .= "          \$('#tileFerramentas').hover( function(){ \$(this).attr( \"src\", \"drawable/tiles/ferramentas/pressed.png\"); }, function(){ \$(this).attr( \"src\", \"drawable/tiles/ferramentas/normal.png\"); } );\n";
 		$this->layout_string .= "        });\n";
 		$this->layout_string .= "      </script>\n";
-		$this->layout_string .= "      <a href=\"usuarios.php\"><img id=\"tileUsuarios\" class=\"item\" alt=\"Usuários\" src=\"drawable/tiles/usuarios/normal.png\" /></a>\n";
-		$this->layout_string .= "      <a href=\"perfis.php\"><img id=\"tilePerfis\" class=\"item\" alt=\"Perfis\" src=\"drawable/tiles/perfis/normal.png\" /></a>\n";
-		$this->layout_string .= "      <a href=\"materias.php\"><img id=\"tileMaterias\" class=\"item\" alt=\"Matérias\" src=\"drawable/tiles/materias/normal.png\" /></a>\n";
-		$this->layout_string .= "      <a href=\"ferramentas.php\"><img id=\"tileFerramentas\" class=\"item\" alt=\"Ferramentas\" src=\"drawable/tiles/ferramentas/normal.png\" /></a>\n";
+		if ( $_COOKIE["permission_usuarios"] >= PERM_LEVEL_ACCESS )
+			$this->layout_string .= "      <a href=\"usuarios.php\"><img id=\"tileUsuarios\" class=\"item\" alt=\"Usuários\" src=\"drawable/tiles/usuarios/normal.png\" /></a>\n";
+		if ( $_COOKIE["permission_perfis"] >= PERM_LEVEL_ACCESS )
+			$this->layout_string .= "      <a href=\"perfis.php\"><img id=\"tilePerfis\" class=\"item\" alt=\"Perfis\" src=\"drawable/tiles/perfis/normal.png\" /></a>\n";
+		if ( $_COOKIE["permission_materias"] >= PERM_LEVEL_ACCESS )
+			$this->layout_string .= "      <a href=\"materias.php\"><img id=\"tileMaterias\" class=\"item\" alt=\"Matérias\" src=\"drawable/tiles/materias/normal.png\" /></a>\n";
+		if ( $_COOKIE["permission_ferramentas"] >= PERM_LEVEL_ACCESS )
+			$this->layout_string .= "      <a href=\"ferramentas.php\"><img id=\"tileFerramentas\" class=\"item\" alt=\"Ferramentas\" src=\"drawable/tiles/ferramentas/normal.png\" /></a>\n";
 		$this->layout_string .= "    </div>\n";
 		$this->layout_string .= "    <!-- </DASHBOARD> -->\n";
 	}

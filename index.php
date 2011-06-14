@@ -49,10 +49,10 @@ function createForm( $name, $object = "" ){
 	$form_type = FORM_LOGIN;
 	$fields_content = "";
 	
-	$input_content = new LayoutTextInput( FIELD_LARGE, true, LOC_LOGIN_LBL_LOGIN, "login", "" ); $fields_content .= $input_content->getLayout();
-	$input_content = new LayoutPassword( FIELD_LARGE, false, LOC_LOGIN_LBL_PWD, "senha", "" ); $fields_content .= $input_content->getLayout();
+	$input_content = new LayoutTextInput( FIELD_LARGE, true, false, LOC_LOGIN_LBL_LOGIN, "login", "" ); $fields_content .= $input_content->getLayout();
+	$input_content = new LayoutPassword( FIELD_LARGE, false, false, LOC_LOGIN_LBL_PWD, "senha", "" ); $fields_content .= $input_content->getLayout();
 	
-	$form_content = new LayoutForm("./index.php", $name, $form_type, "javascript:submit".$name."()", "./index.php", $fields_content );
+	$form_content = new LayoutForm( false, "./index.php", $name, $form_type, "javascript:submit".$name."()", "./index.php", $fields_content );
 
 	return($form_content->getLayout());
 }
@@ -68,7 +68,7 @@ function buildPermissions( $user_id ) {
 	$access->listUser( $user_id );
 	
 	foreach ( $access->getResult() as $item )
-		setcookie("permission[".$item->getNome()."]", $item->getNivel());
+		setcookie("permission_".$item->getNome(), $item->getNivel());
 }
 
 
@@ -81,20 +81,18 @@ function buildPermissions( $user_id ) {
 function destroyPermissions() {
 	setcookie("logged", "");
 	setcookie("user_id", "");
+	setcookie("user_name", "");
 
 	$access = new AccessPermissao();
 	$access->listAll();
 	
 	foreach ( $access->getResult() as $item )
-		setcookie("permission[".$item->getNome()."]", $item->getNivel());
+		setcookie("permission_".$item->getNome(), "");
 }
 ?>
 <?php
 switch ($action) {
 	case "logout":
-		setcookie("logged", "");
-		setcookie("user_id", "");
-		setcookie("user_name", "");
 		destroyPermissions();
 		header("Location: ".PROJECT_ADDRESS."/index.php");
 		exit;
@@ -105,24 +103,23 @@ switch ($action) {
 			setcookie("logged", true);
 			setcookie("user_id", $object->getIDUsuario());
 			setcookie("user_name", $object->getNome());
-			buildPermissions( $_COOKIE["user_id"] );
+			buildPermissions( $object->getIDUsuario() );
 		} else {
-			setcookie("logged", "");
-			setcookie("user_id", "");
-			setcookie("user_name", "");
 			destroyPermissions();
 		}
 		header("Location: ".PROJECT_ADDRESS."/index.php");
 		exit;
 	default:
 		if ( !isset($_COOKIE["logged"] ) ) {
-			setcookie("user_id", "");
-			setcookie("user_name", "");
 			destroyPermissions();
+		} elseif ( $_COOKIE["permission_admin"] < PERM_LEVEL_ACCESS) {
+			destroyPermissions();
+			header("Location: ".PROJECT_ADDRESS."/index.php");
+			exit;	
 		}
 }
 
-if ( isset($_COOKIE["logged"] ) ) {
+if ( isset($_COOKIE["logged"] ) && $_COOKIE["permission_admin"] >= PERM_LEVEL_ACCESS  ) {
 	$title = LOC_DASHBOARD_TITLE;
 
 	$menu_content = new LayoutMenu();

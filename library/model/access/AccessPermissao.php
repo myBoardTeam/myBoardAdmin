@@ -131,7 +131,7 @@ class AccessPermissao extends AbstractAccess {
 			$permissao->setTipo($result[0]["tipo"]);
 			$permissao->setNome($result[0]["nome"]);
 			$permissao->setDescricao($result[0]["descricao"]);
-			$permissao->setNivel(0);
+			$permissao->setNivel(PERM_LEVEL_DENIED);
 			
 			$this->setResult($permissao);
 		}
@@ -158,7 +158,7 @@ class AccessPermissao extends AbstractAccess {
 				$permissao->setTipo($array_item["tipo"]);
 				$permissao->setNome($array_item["nome"]);
 				$permissao->setDescricao($array_item["descricao"]);
-				$permissao->setNivel(0);
+				$permissao->setNivel(PERM_LEVEL_DENIED);
 				
 				$permissao_list[] = $permissao;
 			}
@@ -179,19 +179,19 @@ class AccessPermissao extends AbstractAccess {
 		$fname = "listUser()";
 		
 		$this->listAll();
-		print_r($this->getResult());
-		
+
 		foreach ( $this->getResult() as $array_item ) {
 			$query  = "select id_usuario, id_permissao, nivel";
 			$query .= " from usuario_permissao";
 			$query .= " where id_permissao = '".$array_item->getIDPermissao()."'";
-			$query .= " and id_usuario = '.$id.'";
+			$query .= " and id_usuario = '".$id."'";
 		
 			if ($result = $this->database_connection->runQuery( $query, DB_SELECT )) {
 				$array_item->setNivel($result[0]["nivel"]);
 			}
 			$permissao_list[] = $array_item;
 		}
+
 		$this->setResult($permissao_list);
 	}
 }

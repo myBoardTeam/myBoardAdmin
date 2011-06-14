@@ -14,6 +14,7 @@ require_once(PROJECT_PATH."/library/view/render/AbstractLayout.php");
 class LayoutTextInput extends AbstractLayout {
 	protected $size;
 	protected $required;
+	protected $disabled;
 	protected $label;
 	protected $name;
 		
@@ -22,6 +23,7 @@ class LayoutTextInput extends AbstractLayout {
 	 * 
 	 * @param $p_size Tamanho do Campo
 	 * @param $p_required Informa se o campo é obrigatório (true, false)
+	 * @param $p_disabled Informa está ou não desabilitado (true, false)
 	 * @param $p_label Label do Campo
 	 * @param $p_name Nome do Campo
 	 * @param $p_value Valor do Campo
@@ -29,11 +31,12 @@ class LayoutTextInput extends AbstractLayout {
 	 * @author myBoardTeam <myboardteam@gmail.com>
 	 * @version %I%, %G%
 	 */
-	function __construct( $p_size, $p_required, $p_label, $p_name, $p_value = "" ) {
+	function __construct( $p_size, $p_required, $p_disabled, $p_label, $p_name, $p_value = "" ) {
 		$fname = "constructObject()";
 
 		$this->setSize($p_size);
 		$this->setRequired($p_required);
+		$this->setDisabled($p_disabled);
 		$this->setLabel($p_label);
 		$this->setName($p_name);
 
@@ -58,7 +61,7 @@ class LayoutTextInput extends AbstractLayout {
 		$this->layout_string .= "    \$('.inputText').focusout( function(){ \$(this).borderImage( 'url(\"drawable/form/textbox/normal.png\") 15 20 20 15 stretch stretch' ); } );\n";
 		$this->layout_string .= "  });\n";
 		$this->layout_string .= "</script>\n";
-		$this->layout_string .= "<div style=\"width: ".$this->getSize()."; margin-right: 40px; margin-bottom: 10px; float: left\"><b>".$this->getLabel()."</b><br /><input type=\"text\" class=\"inputText\" name=\"".$this->getName()."\" value=\"".$this->getContent()."\" /></div>\n";
+		$this->layout_string .= "<div style=\"width: ".$this->getSize()."; margin-right: 40px; margin-bottom: 10px; float: left\"><b>".$this->getLabel()."</b><br /><input type=\"text\"".$this->getDisabled()." class=\"inputText\" name=\"".$this->getName()."\" value=\"".$this->getContent()."\" /></div>\n";
 		$this->layout_string .= "<!-- </TEXTINPUT> -->\n";
 	}
 
@@ -84,6 +87,18 @@ class LayoutTextInput extends AbstractLayout {
 	 */	
 	public function setRequired( $p_value ) {
 		$this->required = $p_value;
+	}
+
+	/**
+	 * Define se o Campo estará habilitado ou desabilitado
+	 * 
+	 * @param $p_value Status
+	 *
+	 * @author myBoardTeam <myboardteam@gmail.com>
+	 * @version %I%, %G%
+	 */	
+	public function setDisabled( $p_value ) {
+		$this->disabled = ($p_value == true) ? " disabled" : "";
 	}
 
 	/**
@@ -128,6 +143,16 @@ class LayoutTextInput extends AbstractLayout {
 	 */	
 	public function getRequired() {
 		return(($this->required != "")? $this->required : false);
+	}
+
+	/**
+	 * Verifica se o Campo estará habilitado ou desabilitado
+	 * 
+	 * @author myBoardTeam <myboardteam@gmail.com>
+	 * @version %I%, %G%
+	 */	
+	public function getDisabled() {
+		return($this->disabled);
 	}
 
 	/**

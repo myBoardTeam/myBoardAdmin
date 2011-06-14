@@ -31,7 +31,7 @@ class LayoutPassword extends LayoutTextInput {
 		$this->layout_string .= "    \$('.inputText').focusout( function(){ \$(this).borderImage( 'url(\"drawable/form/textbox/normal.png\") 15 20 20 15 stretch stretch' ); } );\n";
 		$this->layout_string .= "  });\n";
 		$this->layout_string .= "</script>\n";
-		$this->layout_string .= "<div style=\"width: ".$this->getSize()."; margin-right: 40px; margin-bottom: 10px; float: left\"><b>".$this->getLabel()."</b><br /><input type=\"password\" class=\"inputText\" name=\"".$this->getName()."\" value=\"".$this->getContent()."\" /></div>\n";
+		$this->layout_string .= "<div style=\"width: ".$this->getSize()."; margin-right: 40px; margin-bottom: 10px; float: left\"><b>".$this->getLabel()."</b><br /><input type=\"password\"".$this->getDisabled()." class=\"inputText\" name=\"".$this->getName()."\" value=\"".$this->getContent()."\" /></div>\n";
 		$this->layout_string .= "<!-- </PASSWORD> -->\n";
 	}
 }

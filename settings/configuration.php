@@ -39,4 +39,13 @@ define( "FORM_LOGIN", "3");
 define( "FIELD_SMALL", "20%");
 define( "FIELD_MEDIUM", "45%");
 define( "FIELD_LARGE", "95%");
+
+// Niveis de Permissão
+define( "PERM_LEVEL_DENIED", "0" );
+define( "PERM_LEVEL_ACCESS", "1" );
+define( "PERM_LEVEL_KEEP_LIST", "2" );
+define( "PERM_LEVEL_KEEP_VIEW", "3" );
+define( "PERM_LEVEL_KEEP_UPDATE", "4" );
+define( "PERM_LEVEL_KEEP_INSERT", "5" );
+define( "PERM_LEVEL_KEEP_DELETE", "6" );
 ?>
