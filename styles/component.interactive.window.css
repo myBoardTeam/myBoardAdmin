@@ -12,7 +12,7 @@
     left: 0px;
     width: 65%;
     margin: 100px 100px 0px 50px;
-    min-width: 820px;
+    min-width: 840px;
     border: solid transparent;
     border-width: 25px 50px 0px 50px;
     z-index: 4;
@@ -54,7 +54,7 @@
     width: 65%;
     height: 65%;
     margin: 100px 100px 200px 50px;
-    min-width: 820px;
+    min-width: 840px;
     border: solid transparent;
     border-width: 25px 50px 50px 50px;
     border-image: url("drawable/window/background.png") 25 50 50 50;

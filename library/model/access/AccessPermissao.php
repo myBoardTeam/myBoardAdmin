@@ -194,5 +194,51 @@ class AccessPermissao extends AbstractAccess {
 
 		$this->setResult($permissao_list);
 	}
+
+	/**
+	 * Limpa todas as Permissões de Usuario no Banco de Dados
+	 *
+	 * @param $p_id_usuario ID do Usuario
+	 *
+	 * @author myBoardTeam <myboardteam@gmail.com>
+	 * @version %I%, %G%
+	 */
+	public function clearUsuarioPermissao( $p_id_usuario ) {
+		$fname = "clearUsuarioPermissao()";
+		
+		$query = "delete from usuario_permissao where id_usuario = ".$p_id_usuario;
+			
+		if (!$result = $this->database_connection->runQuery( $query, DB_UPDATE )) {
+			$this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_PERMISSAO_CLR_01);
+		}
+	}
+
+	/**
+	 * Atualiza Permissão de Usuairio no Banco de Dados
+	 *
+	 * @param $p_id_usuario ID do Usuario
+	 * @param $p_name_permissao Nome da Permissão
+	 * @param $p_value Nivel de Acesso
+	 *
+	 * @author myBoardTeam <myboardteam@gmail.com>
+	 * @version %I%, %G%
+	 */
+	public function refreshUsuarioPermissao( $p_id_usuario, $p_id_permissao, $p_value ) {
+		$fname = "refreshUsuarioPermissao()";
+		
+		$query  = "insert into usuario_permissao(";
+		$query .= " id_usuario,";
+		$query .= " id_permissao,";
+		$query .= " nivel";
+		$query .= " ) values (";
+		$query .= " '".addslashes($p_id_usuario)."',";
+		$query .= " '".addslashes($p_id_permissao)."',";
+		$query .= " '".addslashes($p_value)."'";
+		$query .= " )";
+			
+		if (!$result = $this->database_connection->runQuery( $query, DB_INSERT )) {
+			$this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_PERMISSAO_REF_01);
+		}
+	}
 }
 ?>

@@ -41,6 +41,10 @@ define( "FIELD_MEDIUM", "45%");
 define( "FIELD_LARGE", "95%");
 
 // Niveis de Permissão
+define( "PERM_TYPE_ACCESS", "ACCESS" );
+define( "PERM_TYPE_KEEP", "KEEP" );
+
+// Niveis de Permissão
 define( "PERM_LEVEL_DENIED", "0" );
 define( "PERM_LEVEL_ACCESS", "1" );
 define( "PERM_LEVEL_KEEP_LIST", "2" );

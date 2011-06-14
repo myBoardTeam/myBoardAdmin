@@ -12,7 +12,7 @@
     padding: 0px;
     border: solid transparent;
     border-width: 15px 20px 20px 15px;
-    border-image: url("drawable/form/textbox/normal.png") 15 20 20 15;
+    border-image: url("../drawable/form/textbox/normal.png") 15 20 20 15;
 	font-family: Verdana, Arial, Sans-serif;
     font-size: 0.9em;
     color: #FFFFFF;

@@ -66,7 +66,7 @@ class LayoutForm extends AbstractLayout {
 		$this->layout_string .= "    <tr>\n";
 		$this->layout_string .= "      <td colspan=2>\n";
 		
-		$input_content = new LayoutHidden( "action", ($this->getFormType() == FORM_UPDATE ) ? "update" : ($this->getFormType() == FORM_LOGIN ) ? "login" : "insert" );
+		$input_content = new LayoutHidden( "action", ($this->getFormType() != FORM_UPDATE ) ? (($this->getFormType() != FORM_LOGIN ) ? "insert" : "login" ) : "update" );
 
 		$this->layout_string .= $input_content->getLayout();
 		$this->layout_string .= $this->getContent();

@@ -69,7 +69,10 @@ define( "LOC_EMSG_ACC_USUARIO_CHK_01", "Login e Senha Inválido" );
 // Cadastro de Permissões
 define( "LOC_PERMISSAO_LIST_TITLE", "Permissões do Usuário" );
 define( "LOC_PERMISSAO_COL_DESCRICAO", "Descrição" );
+define( "LOC_PERMISSAO_COL_NONE", "Nenhum" );
 define( "LOC_PERMISSAO_COL_ACCESS", "Acessar" );
+define( "LOC_PERMISSAO_COL_LIST", "Listar" );
+define( "LOC_PERMISSAO_COL_VIEW", "Ver" );
 define( "LOC_PERMISSAO_COL_UPDATE", "Alterar" );
 define( "LOC_PERMISSAO_COL_INSERT", "Incluir" );
 define( "LOC_PERMISSAO_COL_DELETE", "Excluir" );
@@ -83,6 +86,8 @@ define( "LOC_EMSG_ACC_PERMISSAO_INS_01", "Impossível Inserir Permissão. Consulte
 define( "LOC_EMSG_ACC_PERMISSAO_UPD_01", "Impossível Alterar Permissão. Consulte o Administrador do Sistema." );
 define( "LOC_EMSG_ACC_PERMISSAO_DEL_01", "Impossível Excluir Permissão. Consulte o Administrador do Sistema." );
 define( "LOC_EMSG_ACC_PERMISSAO_LST_01", "Impossível Listar Permissões. Consulte o Administrador do Sistema." );
+define( "LOC_EMSG_ACC_PERMISSAO_CLR_01", "Impossível Excluir Limpar Permissões do Usuário. Consulte o Administrador do Sistema." );
+define( "LOC_EMSG_ACC_PERMISSAO_REF_01", "Impossível Atualizar Permissões do Usuário. Consulte o Administrador do Sistema." );
 
 // Cadastro de Matérias
 define( "LOC_MATERIA_WINDOW_TITLE", "Cadastro de Matérias" );

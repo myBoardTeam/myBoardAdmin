@@ -18,6 +18,7 @@ require_once(PROJECT_PATH."/library/view/render/LayoutForm.php");
 require_once(PROJECT_PATH."/library/view/render/LayoutHidden.php");
 require_once(PROJECT_PATH."/library/view/render/LayoutTextInput.php");
 //require_once(PROJECT_PATH."/library/view/render/LayoutDate.php");
+require_once(PROJECT_PATH."/library/view/render/LayoutRadioButton.php");
 require_once(PROJECT_PATH."/library/view/render/LayoutPassword.php");
 require_once(PROJECT_PATH."/library/view/render/LayoutButton.php");
 
@@ -47,8 +48,7 @@ $array_script = array(
 	"scripts/jquery.gradient.js",
 	"scripts/jquery.borderImage.js",
 	"scripts/jquery.mousewheel.js",
-	"scripts/jquery.jscrollpane.js",
-	"scripts/jquery.customInput.js"
+	"scripts/jquery.jscrollpane.js"
 );
 
 /**
@@ -59,7 +59,7 @@ $array_script = array(
  */
 function createList(){
 	if ( $_COOKIE["permission_usuarios"] >= PERM_LEVEL_KEEP_INSERT )
-		$button = new LayoutButton( LOC_USUARIO_BTN_INSERT, "./usuarios.php?action=new" );
+		$button = new LayoutButton( false, LOC_USUARIO_BTN_INSERT, "./usuarios.php?action=new" );
 
 	$access = new AccessUsuario();
 	$access->listAll();
@@ -112,28 +112,40 @@ function createForm( $name, $object = "" ){
 	$input_content = new LayoutPassword( FIELD_MEDIUM, false, ( $_COOKIE["permission_usuarios"] >= PERM_LEVEL_KEEP_UPDATE ) ? false : true, LOC_USUARIO_LBL_PWD_NEW, "senha_nova", $object->getSenhaNova() ); $fields_content .= $input_content->getLayout();
 	$input_content = new LayoutPassword( FIELD_MEDIUM, false, ( $_COOKIE["permission_usuarios"] >= PERM_LEVEL_KEEP_UPDATE ) ? false : true, LOC_USUARIO_LBL_PWD_CONF, "senha_confirma", $object->getSenhaConfirma() ); $fields_content .= $input_content->getLayout();
 	
-	if ( $form_type == FORM_UPDATE ) {
-		$access = new AccessPermissao();
-		$access->listAll();
-		foreach ($access->getResult() as $item) {
-			$list_item[] = array(
-				"descricao" => array( "value" => $item->getDescricao() ),
-				"access" => array( "value" => "&nbsp;" ),
-				"update" => array( "value" => "&nbsp;" ),
-				"insert" => array( "value" => "&nbsp;" ),
-				"delete" => array( "value" => "&nbsp;" )
-			);
-		}
-		$list_content = new LayoutList(LOC_PERMISSAO_LIST_TITLE);
-		$list_content->addColumn("descricao", "60%", LOC_PERMISSAO_COL_DESCRICAO);
-		$list_content->addColumn("access", "10%", LOC_PERMISSAO_COL_ACCESS);
-		$list_content->addColumn("update", "10%", LOC_PERMISSAO_COL_UPDATE);
-		$list_content->addColumn("insert", "10%", LOC_PERMISSAO_COL_INSERT);
-		$list_content->addColumn("delete", "10%", LOC_PERMISSAO_COL_DELETE);
-		$list_content->setList($list_item);
-	
-		$fields_content .= $list_content->getLayout();
+	$access = new AccessPermissao();
+	if ( $form_type == FORM_UPDATE ) $access->listUser( $object->getIDUsuario() );
+	else $access->listAll();
+	foreach ($access->getResult() as $item) {
+		$radio_none = new LayoutRadioButton( ( $_COOKIE["permission_usuarios"] >= PERM_LEVEL_KEEP_UPDATE ) ? false : true, "", "user_permission[".$item->getIDPermissao()."]", ($item->getNivel() == PERM_LEVEL_DENIED)? true : false,  PERM_LEVEL_DENIED );
+		$radio_access = new LayoutRadioButton( ( $_COOKIE["permission_usuarios"] >= PERM_LEVEL_KEEP_UPDATE ) ? false : true, "", "user_permission[".$item->getIDPermissao()."]", ($item->getNivel() == PERM_LEVEL_ACCESS)? true : false, PERM_LEVEL_ACCESS );
+		$radio_list = new LayoutRadioButton( ( $_COOKIE["permission_usuarios"] >= PERM_LEVEL_KEEP_UPDATE && $item->getTipo() == PERM_TYPE_KEEP ) ? false : true, "", "user_permission[".$item->getIDPermissao()."]", ($item->getNivel() == PERM_LEVEL_KEEP_LIST)? true : false, PERM_LEVEL_KEEP_LIST );
+		$radio_view = new LayoutRadioButton( ( $_COOKIE["permission_usuarios"] >= PERM_LEVEL_KEEP_UPDATE && $item->getTipo() == PERM_TYPE_KEEP ) ? false : true, "", "user_permission[".$item->getIDPermissao()."]", ($item->getNivel() == PERM_LEVEL_KEEP_VIEW)? true : false, PERM_LEVEL_KEEP_VIEW );
+		$radio_update = new LayoutRadioButton( ( $_COOKIE["permission_usuarios"] >= PERM_LEVEL_KEEP_UPDATE && $item->getTipo() == PERM_TYPE_KEEP ) ? false : true, "", "user_permission[".$item->getIDPermissao()."]", ($item->getNivel() == PERM_LEVEL_KEEP_UPDATE)? true : false, PERM_LEVEL_KEEP_UPDATE );
+		$radio_insert = new LayoutRadioButton( ( $_COOKIE["permission_usuarios"] >= PERM_LEVEL_KEEP_UPDATE && $item->getTipo() == PERM_TYPE_KEEP ) ? false : true, "", "user_permission[".$item->getIDPermissao()."]", ($item->getNivel() == PERM_LEVEL_KEEP_INSERT)? true : false, PERM_LEVEL_KEEP_INSERT );
+		$radio_delete = new LayoutRadioButton( ( $_COOKIE["permission_usuarios"] >= PERM_LEVEL_KEEP_UPDATE && $item->getTipo() == PERM_TYPE_KEEP ) ? false : true, "", "user_permission[".$item->getIDPermissao()."]", ($item->getNivel() == PERM_LEVEL_KEEP_DELETE)? true : false, PERM_LEVEL_KEEP_DELETE );
+		$list_item[] = array(
+			"descricao" => array( "value" => $item->getDescricao() ),
+			"none" => array( "value" => $radio_none->getLayout() ),
+			"access" => array( "value" => $radio_access->getLayout() ),
+			"list" => array( "value" => $radio_list->getLayout() ),
+			"view" => array( "value" => $radio_view->getLayout() ),
+			"update" => array( "value" => $radio_update->getLayout() ),
+			"insert" => array( "value" => $radio_insert->getLayout() ),
+			"delete" => array( "value" => $radio_delete->getLayout() )
+		);
 	}
+	$list_content = new LayoutList(LOC_PERMISSAO_LIST_TITLE);
+	$list_content->addColumn("descricao", "44%", LOC_PERMISSAO_COL_DESCRICAO);
+	$list_content->addColumn("none", "8%", LOC_PERMISSAO_COL_NONE);
+	$list_content->addColumn("access", "8%", LOC_PERMISSAO_COL_ACCESS);
+	$list_content->addColumn("list", "8%", LOC_PERMISSAO_COL_LIST);
+	$list_content->addColumn("view", "8%", LOC_PERMISSAO_COL_VIEW);
+	$list_content->addColumn("update", "8%", LOC_PERMISSAO_COL_UPDATE);
+	$list_content->addColumn("insert", "8%", LOC_PERMISSAO_COL_INSERT);
+	$list_content->addColumn("delete", "8%", LOC_PERMISSAO_COL_DELETE);
+	$list_content->setList($list_item);
+
+	$fields_content .= $list_content->getLayout();
 	
 	$form_content = new LayoutForm( $form_perm_level, "./usuarios.php", $name, $form_type, "javascript:submit".$name."()", "./usuarios.php", $fields_content );
 
@@ -153,14 +165,19 @@ if ( isset($_COOKIE["logged"] ) && $_COOKIE["permission_admin"] >= PERM_LEVEL_AC
 				$obj_usuario->setUsuario(isset( $_POST["usuario"] ) ? $_POST["usuario"] : "");
 				$obj_usuario->setSenhaNova(isset( $_POST["senha_nova"] ) ? $_POST["senha_nova"] : "");
 				$obj_usuario->setSenhaConfirma(isset( $_POST["senha_confirma"] ) ? $_POST["senha_confirma"] : "");
-		
+
 				$access_usuario = new AccessUsuario();
 				$access_usuario->insertItem($obj_usuario);
 		
 				$obj_usuario->setIDUsuario($access_usuario->getResult());
+				
 				$obj_usuario->setSenhaNova("");
 				$obj_usuario->setSenhaConfirma("");
 		
+				$access_permissao = new AccessPermissao();
+				foreach ( $_POST["user_permission"] as $key => $value )
+					if ( $value > 0 ) $access_permissao->refreshUsuarioPermissao($obj_usuario->getIDUsuario(), $key, $value);
+
 				$subtitle = LOC_USUARIO_FORM_UPDATE_TITLE;
 				$html_content = createForm("FormUsuario", $obj_usuario);
 			} else { header("Location: ".PROJECT_ADDRESS."/usuarios.php"); exit; }
@@ -183,6 +200,11 @@ if ( isset($_COOKIE["logged"] ) && $_COOKIE["permission_admin"] >= PERM_LEVEL_AC
 				$obj_usuario->setSenhaNova("");
 				$obj_usuario->setSenhaConfirma("");
 				
+				$access_permissao = new AccessPermissao();
+				$access_permissao->clearUsuarioPermissao($obj_usuario->getIDUsuario());
+				foreach ( $_POST["user_permission"] as $key => $value )
+					if ( $value > 0 ) $access_permissao->refreshUsuarioPermissao($obj_usuario->getIDUsuario(), $key, $value);
+
 				$subtitle = LOC_USUARIO_FORM_UPDATE_TITLE;
 				$html_content = createForm("FormUsuario", $obj_usuario);
 			} else { header("Location: ".PROJECT_ADDRESS."/usuarios.php"); exit; }
@@ -222,7 +244,6 @@ if ( isset($_COOKIE["logged"] ) && $_COOKIE["permission_admin"] >= PERM_LEVEL_AC
 	$window_content = new LayoutWindow($title.(($subtitle != "")? " - ".$subtitle : ""), $html_content);
 	$menu_content = new LayoutMenu();
 	$page_content = new LayoutPage($title.(($subtitle != "")? " - ".$subtitle : ""), $array_script, $array_stylesheet, $menu_content->getLayout().$window_content->getLayout());
-	
 	$page_content->getHeaders();
 	echo($page_content->getLayout());
 } else {

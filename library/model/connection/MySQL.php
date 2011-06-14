@@ -121,6 +121,7 @@ class MySQL extends AbstractMessageLog {
 					$this->addMessage(get_class($this), $fname, MB_WARNING, MB_HIDDEN, LOC_EMSG_DB_MYSQL_INSERT_EMPTY);
 				} else return($return);
 			} else if ($type == DB_SELECT) {
+				$return = "";
 				while ( $array_item = mysql_fetch_array($this->resultset, $type) ) $return[] = $array_item;
 				if ( is_array($return) ) return($return);
 				else $this->addMessage(get_class($this), $fname, MB_WARNING, MB_HIDDEN, LOC_EMSG_DB_MYSQL_RS_EMPTY);
