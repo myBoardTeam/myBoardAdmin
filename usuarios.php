@@ -167,19 +167,21 @@ if ( isset($_COOKIE["logged"] ) && $_COOKIE["permission_admin"] >= PERM_LEVEL_AC
 				$obj_usuario->setSenhaConfirma(isset( $_POST["senha_confirma"] ) ? $_POST["senha_confirma"] : "");
 
 				$access_usuario = new AccessUsuario();
-				$access_usuario->insertItem($obj_usuario);
+				if ( $access_usuario->insertItem($obj_usuario) ) {
+					$obj_usuario->setIDUsuario($access_usuario->getResult());
+					$obj_usuario->setSenhaNova("");
+					$obj_usuario->setSenhaConfirma("");
 		
-				$obj_usuario->setIDUsuario($access_usuario->getResult());
-				
-				$obj_usuario->setSenhaNova("");
-				$obj_usuario->setSenhaConfirma("");
-		
-				$access_permissao = new AccessPermissao();
-				foreach ( $_POST["user_permission"] as $key => $value )
-					if ( $value > 0 ) $access_permissao->refreshUsuarioPermissao($obj_usuario->getIDUsuario(), $key, $value);
-
-				$subtitle = LOC_USUARIO_FORM_UPDATE_TITLE;
-				$html_content = createForm("FormUsuario", $obj_usuario);
+					$access_permissao = new AccessPermissao();
+					foreach ( $_POST["user_permission"] as $key => $value )
+						if ( $value > 0 ) $access_permissao->refreshUsuarioPermissao($obj_usuario->getIDUsuario(), $key, $value);
+	
+					$subtitle = LOC_USUARIO_FORM_UPDATE_TITLE;
+					$html_content = createForm("FormUsuario", $obj_usuario);
+				} else {
+					$subtitle = LOC_USUARIO_FORM_INSERT_TITLE;
+					$html_content = createForm("FormUsuario");
+				}
 			} else { header("Location: ".PROJECT_ADDRESS."/usuarios.php"); exit; }
 			break;
 		case "update":
@@ -195,16 +197,18 @@ if ( isset($_COOKIE["logged"] ) && $_COOKIE["permission_admin"] >= PERM_LEVEL_AC
 				$obj_usuario->setSenhaConfirma(isset( $_POST["senha_confirma"] ) ? $_POST["senha_confirma"] : "");
 		
 				$access_usuario = new AccessUsuario();
-				$access_usuario->updateItem($obj_usuario);
-		
-				$obj_usuario->setSenhaNova("");
-				$obj_usuario->setSenhaConfirma("");
-				
-				$access_permissao = new AccessPermissao();
-				$access_permissao->clearUsuarioPermissao($obj_usuario->getIDUsuario());
-				foreach ( $_POST["user_permission"] as $key => $value )
-					if ( $value > 0 ) $access_permissao->refreshUsuarioPermissao($obj_usuario->getIDUsuario(), $key, $value);
-
+				if ( $access_usuario->updateItem($obj_usuario) ) {		
+					$obj_usuario->setSenhaNova("");
+					$obj_usuario->setSenhaConfirma("");
+					
+					$access_permissao = new AccessPermissao();
+					$access_permissao->clearUsuarioPermissao($obj_usuario->getIDUsuario());
+					foreach ( $_POST["user_permission"] as $key => $value )
+						if ( $value > 0 ) $access_permissao->refreshUsuarioPermissao($obj_usuario->getIDUsuario(), $key, $value);
+				} else {
+					$access_usuario->find(isset( $_POST["id_usuario"] ) ? $_POST["id_usuario"] : "");
+					$obj_usuario = $access_usuario->getResult();
+				}
 				$subtitle = LOC_USUARIO_FORM_UPDATE_TITLE;
 				$html_content = createForm("FormUsuario", $obj_usuario);
 			} else { header("Location: ".PROJECT_ADDRESS."/usuarios.php"); exit; }

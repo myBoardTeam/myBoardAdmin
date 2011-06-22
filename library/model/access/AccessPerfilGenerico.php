@@ -26,7 +26,7 @@ class AccessPerfilGenerico extends AbstractAccess {
 	public function insertItem( $item ) {
 		$fname = "insertItem()";
 		
-		if ( $item->getDescricao() == "") { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_PERFIL_NN_02); $this->setResult(false); }
+		if ( $item->getDescricao() == "") { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_PERFIL_NN_02); $this->setResult(false); return(false); }
 			
 		$query  = "insert into perfil_generico(";
 		$query .= " descricao";
@@ -51,8 +51,8 @@ class AccessPerfilGenerico extends AbstractAccess {
 	public function updateItem( $item ) {
 		$fname = "updateItem()";
 		
-		if ( !$item->getIDPerfilGenerico() > 0 ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_PERFIL_NN_01); $this->setResult(false); }
-		if ( $item->getDescricao() == "") { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_PERFIL_NN_02); $this->setResult(false); }
+		if ( !$item->getIDPerfilGenerico() > 0 ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_PERFIL_NN_01); $this->setResult(false); return(false); }
+		if ( $item->getDescricao() == "") { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_PERFIL_NN_02); $this->setResult(false); return(false); }
 			
 		$query  = "update perfil_generico set";
 		$query .= " descricao = '".addslashes($item->getDescricao())."'";
@@ -75,7 +75,7 @@ class AccessPerfilGenerico extends AbstractAccess {
 	public function deleteItem( $id ) {
 		$fname = "deleteItem()";
 
-		if ( !$id > 0 ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_PERFIL_NN_01); $this->setResult(false); }
+		if ( !$id > 0 ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_PERFIL_NN_01); $this->setResult(false); return(false); }
 		
 		$query = "delete from usuario_perfil where id_perfil_generico = ".$id;
 		if (!$result = $this->database_connection->runQuery( $query, DB_UPDATE ))
@@ -99,7 +99,7 @@ class AccessPerfilGenerico extends AbstractAccess {
 	public function find( $id ) {
 		$fname = "find()";
 		
-		if ( !$id > 0 ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_PERFIL_NN_01); $this->setResult(false); }
+		if ( !$id > 0 ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_PERFIL_NN_01); $this->setResult(false); return(false); }
 
 		$query = "select * from perfil_generico where id_perfil_generico = ".$id." limit 1";
 		

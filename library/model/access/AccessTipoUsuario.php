@@ -26,7 +26,7 @@ class AccessTipoUsuario extends AbstractAccess {
 	public function find( $id ) {
 		$fname = "find()";
 		
-		if ( !$id > 0 ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_TP_USUARIO_NN_01); $this->setResult(false); }
+		if ( !$id > 0 ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_TP_USUARIO_NN_01); $this->setResult(false); return(false); }
 
 		$query = "select * from tipo_usuario where id_tipo = '".$id."' limit 1";
 		

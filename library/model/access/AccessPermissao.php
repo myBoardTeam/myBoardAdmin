@@ -26,9 +26,9 @@ class AccessPermissao extends AbstractAccess {
 	public function insertItem( $item ) {
 		$fname = "insertItem()";
 		
-		if ( $item->getTipo() == "") { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_PERMISSAO_NN_02); $this->setResult(false); break; }
-		if ( $item->getNome() == "") { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_PERMISSAO_NN_03); $this->setResult(false); break; }
-		if ( $item->getDescricao() == "") { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_PERMISSAO_NN_04); $this->setResult(false); break; }
+		if ( $item->getTipo() == "") { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_PERMISSAO_NN_02); $this->setResult(false); return(false); }
+		if ( $item->getNome() == "") { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_PERMISSAO_NN_03); $this->setResult(false); return(false); }
+		if ( $item->getDescricao() == "") { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_PERMISSAO_NN_04); $this->setResult(false); return(false); }
 			
 		$query  = "insert into permissao(";
 		$query .= " tipo,";
@@ -42,7 +42,7 @@ class AccessPermissao extends AbstractAccess {
 			
 		if (!$result = $this->database_connection->runQuery( $query, DB_INSERT )) {
 			$this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_PERMISSAO_INS_01);
-			break;
+			return(false);
 		}
 
 		$this->setResult($result);
@@ -59,10 +59,10 @@ class AccessPermissao extends AbstractAccess {
 	public function updateItem( $item ) {
 		$fname = "updateItem()";
 		
-		if ( !$item->getIDPermissao() > 0 ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_PERMISSAO_NN_01); $this->setResult(false); break; }
-		if ( $item->getTipo() == "") { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_PERMISSAO_NN_02); $this->setResult(false); break; }
-		if ( $item->getNome() == "") { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_PERMISSAO_NN_03); $this->setResult(false); break; }
-		if ( $item->getDescricao() == "") { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_PERMISSAO_NN_04); $this->setResult(false); break; }
+		if ( !$item->getIDPermissao() > 0 ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_PERMISSAO_NN_01); $this->setResult(false); return(false); }
+		if ( $item->getTipo() == "") { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_PERMISSAO_NN_02); $this->setResult(false); return(false); }
+		if ( $item->getNome() == "") { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_PERMISSAO_NN_03); $this->setResult(false); return(false); }
+		if ( $item->getDescricao() == "") { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_PERMISSAO_NN_04); $this->setResult(false); return(false); }
 			
 		$query  = "update permissao set";
 		$query .= " tipo = '".addslashes($item->getTipo())."',";
@@ -72,7 +72,7 @@ class AccessPermissao extends AbstractAccess {
 			
 		if (!$result = $this->database_connection->runQuery( $query, DB_UPDATE )) {
 			$this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_PERMISSAO_UPD_01);
-			break;
+			return(false);
 		}
 			
 		$this->setResult($result);		
@@ -89,18 +89,18 @@ class AccessPermissao extends AbstractAccess {
 	public function deleteItem( $id ) {
 		$fname = "deleteItem()";
 
-		if ( !$id > 0 ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_PERMISSAO_NN_01); $this->setResult(false); break; }
+		if ( !$id > 0 ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_PERMISSAO_NN_01); $this->setResult(false); return(false); }
 		
 		$query = "delete from usuario_permissao where id_permissao = ".$id;
 		if (!$result = $this->database_connection->runQuery( $query, DB_UPDATE )) {
 			$this->addMessage(get_class($this), $fname, MB_WARNING, MB_SHOW, LOC_EMSG_ACC_PERMISSAO_DEL_01);
-			break;
+			return(false);
 		}
 
 		$query = "delete from permissao where id_permissao = ".$id;
 		if (!$result = $this->database_connection->runQuery( $query, DB_UPDATE )) {
 			$this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_PERMISSAO_DEL_02);
-			break;
+			return(false);
 		}
 			
 		$this->setResult($result);
@@ -117,14 +117,14 @@ class AccessPermissao extends AbstractAccess {
 	public function find( $id ) {
 		$fname = "find()";
 		
-		if ( !$id > 0 ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_PERMISSAO_NN_01); $this->setResult(false); break; }
+		if ( !$id > 0 ) { $this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_PERMISSAO_NN_01); $this->setResult(false); return(false); }
 
 		$query = "select * from permissao where id_permissao = ".$id." limit 1";
 		
 		if (!$result = $this->database_connection->runQuery( $query, DB_SELECT )) {
 			$this->addMessage(get_class($this), $fname, MB_ERROR, MB_SHOW, LOC_EMSG_ACC_PERMISSAO_FND_01);
 			$this->setResult(false);
-			break;
+			return(false);
 		} else {
 			$permissao = new Permissao();
 			$permissao->setIDPermissao($result[0]["id_permissao"]);
